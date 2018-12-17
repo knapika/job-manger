@@ -1,0 +1,41 @@
+<ul *ngIf="offers" id="offer-list">
+  <li *ngFor="let offer of offers" class="offer-container">
+    <div class="row">
+      <div class="col category">
+        <h6>CATEGORY</h6>
+        {{offer.category}}
+      </div>
+      <div class="col">
+        <h6>CITY</h6>
+        {{offer.city}}
+      </div>
+      <div class="col">
+          <h6>COMPANY</h6>
+        <div>{{offer.companyName}}</div>
+      </div>
+      <div class="col">
+        <h6>MUSTS</h6>
+        <ul>
+          <li *ngFor="let elem of getList(offer.musts)"><div>{{elem.value}}</div></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h6>NICES</h6>
+        <ul>
+            <li *ngFor="let elem of getList(offer.nices)"><div>{{elem.value}}</div></li>
+          </ul> 
+      </div>
+      <div class="col">
+        <h6>LANGS</h6>
+        <ul>
+            <li *ngFor="let elem of getList(offer.langs)"><div>{{elem.value}}</div></li>
+          </ul>
+      </div>
+      <div class="col">
+        <h6>SALARY</h6>
+        <div><span class="label">From: </span>{{offer.salaryFrom}} zl </div>
+        <div><span class="label">To: </span>{{offer.salaryTo}} zl </div>
+      </div>
+    </div>
+  </li>
+</ul>
