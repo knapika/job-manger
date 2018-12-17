@@ -19,9 +19,9 @@ public class RestApi {
     private UserLogic userLogic;
 
     @GetMapping(path="/add")
-    public @ResponseBody String addNewUser () {
+    public @ResponseBody Integer addNewUser () {
         User n = new User();
-        n.setLogin("JonSnow");
+        n.setLogin("JonSnow1");
         n.setPassword(DigestUtils.sha256Hex("jon"));
         n.setFirstName("Jon");
         n.setLastName("Snow");
