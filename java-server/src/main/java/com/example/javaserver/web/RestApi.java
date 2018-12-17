@@ -21,10 +21,10 @@ public class RestApi {
     @GetMapping(path="/add")
     public @ResponseBody String addNewUser () {
         User n = new User();
-        n.setLogin("Grom");
-        n.setPassword(DigestUtils.sha256Hex("aga"));
-        n.setFirstName("Aga");
-        n.setLastName("Dom");
+        n.setLogin("JonSnow");
+        n.setPassword(DigestUtils.sha256Hex("jon"));
+        n.setFirstName("Jon");
+        n.setLastName("Snow");
         n.setEmail("aaa");
         return userLogic.addUser(n);
     }
