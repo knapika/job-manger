@@ -1,31 +1,31 @@
 package com.example.javaserver.services;
 
-import com.example.javaserver.dtos.Offer;
+import com.example.javaserver.dtos.PostingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class OfferLogic {
-    private static NofluffPageReader nofluffPageReader = new NofluffPageReader();
 
-    public OfferLogic() {
+    @Autowired
+    private NofluffParser parser;
 
-    }
-
-    public static List<Offer> getOffers(String city, String tech, String position, String experience, String salary) {
-        try {
-            List<Offer> offers = Collections.synchronizedList(new LinkedList<>());
-            List<String> offersIds= nofluffPageReader.getJobsOffersIdByCriteria(tech, city, position, experience, salary);
-
-            offersIds.parallelStream().limit(4).forEach(id -> offers.add(nofluffPageReader.getOfferObject(id)));
-
-            return offers;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public List<PostingDTO> getOffers(String city, String tech, String position, String experience, String salary) {
+//        try {
+//            List<Offer> offers = Collections.synchronizedList(new LinkedList<>());
+//            List<PostingDTO> offersIDs= parser.getJobsOffersIdByCriteria(tech, city, position, experience, salary);
+//
+////            offersIDs.parallelStream().limit(4).forEach(id -> offers.add(parser.getOfferObject(id)));
+//
+//            return offersIDs;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 }

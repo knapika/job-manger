@@ -1,11 +1,9 @@
 package com.example.javaserver.web;
 
-import com.example.javaserver.dtos.Offer;
+import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.entities.User;
 import com.example.javaserver.services.OfferLogic;
 import com.example.javaserver.services.UserLogic;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,9 @@ public class RestApi {
     @Autowired
     private UserLogic userLogic;
 
+    @Autowired
+    private OfferLogic offerLogic;
+
     @GetMapping(path="/add")
     public @ResponseBody Integer addNewUser () {
         User n = new User();
@@ -29,6 +30,11 @@ public class RestApi {
         return userLogic.addUser(n);
     }
 
+    @GetMapping(path="/postings")
+    public @ResponseBody List<PostingDTO> getPostings() {
+        return offerLogic.getOffers("", " ","", "", "");
+    }
+
 //    @GetMapping(path="/all")
 //    public @ResponseBody
 //    Iterable<User> getAllUsers() {
@@ -36,21 +42,15 @@ public class RestApi {
 //        return userRepository.findAll();
 //    }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public String testConnection() throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString("Dziala");
-    }
-
-    @RequestMapping(value = "/offers", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Offer> getJobsOffers(@RequestParam(value = "city", required = false, defaultValue = "") String city,
-                                     @RequestParam(value = "tech", required = false, defaultValue = "") String tech,
-                                     @RequestParam(value = "position", required = false, defaultValue = "") String position,
-                                     @RequestParam(value = "experience", required = false, defaultValue = "") String experience,
-                                     @RequestParam(value = "salary", required = false, defaultValue = "") String salary) {
-
-        List<Offer> offers = OfferLogic.getOffers(city, tech, position, experience, salary);
-        return offers;
-    }
+//    @RequestMapping(value = "/offers", method = RequestMethod.GET)
+//    @ResponseBody
+//    public List<Offer> getJobsOffers(@RequestParam(value = "city", required = false, defaultValue = "") String city,
+//                                     @RequestParam(value = "tech", required = false, defaultValue = "") String tech,
+//                                     @RequestParam(value = "position", required = false, defaultValue = "") String position,
+//                                     @RequestParam(value = "experience", required = false, defaultValue = "") String experience,
+//                                     @RequestParam(value = "salary", required = false, defaultValue = "") String salary) {
+//
+//        List<Offer> offers = this.offerLogic.getOffers(city, tech, position, experience, salary);
+//        return offers;
+//    }
 }
