@@ -18,6 +18,10 @@ public class Offer {
     @Column
     private String postingID;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="companyID")
+    private Company companyID;
+
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="musts",
             joinColumns = { @JoinColumn(name = "offerID") },
@@ -78,5 +82,13 @@ public class Offer {
 
     public void setLangs(Set<Skill> langs) {
         this.langs = langs;
+    }
+
+    public Company getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(Company companyID) {
+        this.companyID = companyID;
     }
 }

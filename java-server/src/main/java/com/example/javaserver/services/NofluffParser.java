@@ -2,9 +2,11 @@ package com.example.javaserver.services;
 
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.dtos.PostingsDTO;
+import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.ParserUsed;
 import com.example.javaserver.entities.Skill;
+import com.example.javaserver.repositories.CompanyRepository;
 import com.example.javaserver.repositories.ParserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class NofluffParser {
 
     @Autowired
     private ParserRepository parserRepository;
+
+    @Autowired
+    private CompanyLogic companyLogic;
 
     @Autowired
     private OfferLogic offerLogic;
@@ -105,6 +110,8 @@ public class NofluffParser {
         offer.getMusts().stream().forEach(must -> must.setMusts(new HashSet<>(offers)));
         offer.getNices().stream().forEach(nice -> nice.setNices(new HashSet<>(offers)));
         offer.getLangs().stream().forEach(lang -> lang.setLangs(new HashSet<>(offers)));
+
+        offer.setCompanyID(this.companyLogic.addOfferToCompany(offer, postingDTO));
         System.out.println("Stworzono");
         return offer;
     }
