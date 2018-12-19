@@ -1,13 +1,14 @@
 package com.example.javaserver.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="Skills")
 public class Skill {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="skillID")
     private Integer skillID;
 
@@ -17,16 +18,16 @@ public class Skill {
     @Column
     private String value;
 
-    @ManyToOne
-    @JoinColumn(name = "offerID")
-    private Offer offer;
+    @ManyToMany(mappedBy = "musts")
+    Set<Offer> musts;
 
-    public Integer getSkillID() {
-        return skillID;
-    }
+    @ManyToMany(mappedBy = "nices")
+    Set<Offer> nices;
 
-    public void setSkillID(Integer skillID) {
-        this.skillID = skillID;
+    @ManyToMany(mappedBy = "nices")
+    Set<Offer> langs;
+
+    public Skill() {
     }
 
     public Integer getRank() {
@@ -37,6 +38,14 @@ public class Skill {
         this.rank = rank;
     }
 
+    public Integer getSkillID() {
+        return skillID;
+    }
+
+    public void setSkillID(Integer skillID) {
+        this.skillID = skillID;
+    }
+
     public String getValue() {
         return value;
     }
@@ -45,11 +54,27 @@ public class Skill {
         this.value = value;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public Set<Offer> getMusts() {
+        return musts;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public void setMusts(Set<Offer> musts) {
+        this.musts = musts;
+    }
+
+    public Set<Offer> getNices() {
+        return nices;
+    }
+
+    public void setNices(Set<Offer> nices) {
+        this.nices = nices;
+    }
+
+    public Set<Offer> getLangs() {
+        return langs;
+    }
+
+    public void setLangs(Set<Offer> langs) {
+        this.langs = langs;
     }
 }

@@ -9,18 +9,19 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.javaserver.utils.Consts.ERROR_EMAIL_EXISTS;
+import static com.example.javaserver.utils.Consts.ERROR_LOGIN_EXISTS;
+import static com.example.javaserver.utils.Consts.STATUS_OK;
+
 @Service
 public class UserLogic {
     @Autowired
     private UserRepository userRepository;
 
-    public static final Integer STATUS_OK = 0;
-    public static final Integer ERROR_LOGIN_EXISTS = 101;
-    public static final Integer ERROR_EMAIL_EXISTS = 102;
 
     public Integer addUser(User userToAdd) {
         Integer status = this.validateUserToAdd(userToAdd);
-        if(status == UserLogic.STATUS_OK) {
+        if(status == STATUS_OK) {
             userRepository.save(userToAdd);
         }
         return status;

@@ -30,10 +30,10 @@ public class RestApi {
         return userLogic.addUser(n);
     }
 
-    @GetMapping(path="/postings")
-    public @ResponseBody List<PostingDTO> getPostings() {
-        return offerLogic.getOffers("", " ","", "", "");
-    }
+//    @GetMapping(path="/postings")
+//    public @ResponseBody List<PostingDTO> getPostings() {
+//        return offerLogic.getOffers("", " ","", "", "");
+//    }
 
 //    @GetMapping(path="/all")
 //    public @ResponseBody

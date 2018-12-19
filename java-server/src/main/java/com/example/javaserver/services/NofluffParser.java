@@ -4,14 +4,16 @@ import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.dtos.PostingsDTO;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.ParserUsed;
+import com.example.javaserver.entities.Skill;
 import com.example.javaserver.repositories.ParserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,6 +21,10 @@ public class NofluffParser {
 
     @Autowired
     private ParserRepository parserRepository;
+
+    @Autowired
+    private OfferLogic offerLogic;
+
 
     static final String parserName = "Nofluff";
 
@@ -31,28 +37,29 @@ public class NofluffParser {
         this.objectMapper = new ObjectMapper();
     }
 
-    public List<PostingDTO> getJobsOffersIdByCriteria(String tech, String city, String position, String experience,
-                                                  String salary) throws IOException {
-        String completeUrl = nofluffApiUrl;
-        String json = httpCustomClient.getPageContent(completeUrl);
+//    public List<PostingDTO> getJobsOffersIdByCriteria(String tech, String city, String position, String experience,
+//                                                  String salary) throws IOException {
+//        String completeUrl = nofluffApiUrl;
+//        String json = httpCustomClient.getPageContent(completeUrl);
+//
+//
+//        PostingsDTO postings = this.objectMapper.readValue(json, PostingsDTO.class);
+//        List<PostingDTO> postedOffers = postings.getPostings();
+//
+//        Optional<ParserUsed> parserUsed = this.parserRepository.findByParserName(NofluffParser.parserName);
+//        if(parserUsed.isPresent()) {
+//            postedOffers = postedOffers.parallelStream()
+//                    .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
+//                    .collect(Collectors.toList());
+//        }
+//
+//        postedOffers.parallelStream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
+//
+//        return postings.getPostings();
+//    }
 
-
-        PostingsDTO postings = this.objectMapper.readValue(json, PostingsDTO.class);
-        List<PostingDTO> postedOffers = postings.getPostings();
-
-        Optional<ParserUsed> parserUsed = this.parserRepository.findByParserName(NofluffParser.parserName);
-        if(parserUsed.isPresent()) {
-            postedOffers = postedOffers.parallelStream()
-                    .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
-                    .collect(Collectors.toList());
-        }
-
-        postedOffers.parallelStream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
-
-        return postings.getPostings();
-    }
-
-    private void saveOffers() throws IOException {
+    @EventListener(ApplicationReadyEvent.class)
+    public void saveOffers() throws IOException {
         String completeUrl = nofluffApiUrl;
         String json = httpCustomClient.getPageContent(completeUrl);
 
@@ -60,15 +67,14 @@ public class NofluffParser {
         PostingsDTO postings = objectMapper.readValue(json, PostingsDTO.class);
         List<PostingDTO> postedOffers = postings.getPostings();
 
-        Optional<ParserUsed> parserUsed = this.parserRepository.findByParserName(NofluffParser.parserName);
+        Optional<ParserUsed> parserUsed = this.parserRepository.findByParserName(parserName);
         if(parserUsed.isPresent()) {
             postedOffers = postedOffers.parallelStream()
                     .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
                     .collect(Collectors.toList());
         }
 
-        postedOffers.parallelStream().forEach(offer -> this.saveOffer(offer.getId()));
-
+        postedOffers.parallelStream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
     }
 
     private void saveOffer(String offerID) {
@@ -78,17 +84,28 @@ public class NofluffParser {
 
             PostingDTO postingDTO = this.objectMapper.readValue(json, PostingsDTO.class).getPosting();
             Offer offer = this.createOffer(postingDTO);
-            System.out.println(this.objectMapper.writeValueAsString(offer));
 
+            System.out.println(offer.getOfferID());
+            this.offerLogic.saveOffer(offer);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private Offer createOffer(PostingDTO postingDTO) {
+        System.out.println("Tworzenie");
         Offer offer = new Offer();
-        offer.setOfferID(postingDTO.getId());
-        offer.setMusts(postingDTO.getMusts());
+        offer.setPostingID(postingDTO.getId());
+        offer.setMusts(new HashSet<>(postingDTO.getMusts()));
+        offer.setNices(new HashSet<>(postingDTO.getNices()));
+        offer.setLangs(new HashSet<>(postingDTO.getLangs()));
+
+        List<Offer> offers = new LinkedList<>();
+
+        offer.getMusts().stream().forEach(must -> must.setMusts(new HashSet<>(offers)));
+        offer.getNices().stream().forEach(nice -> nice.setNices(new HashSet<>(offers)));
+        offer.getLangs().stream().forEach(lang -> lang.setLangs(new HashSet<>(offers)));
+        System.out.println("Stworzono");
         return offer;
     }
 }
