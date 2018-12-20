@@ -12,8 +12,8 @@ public class EssentialsDTO {
     private String postalCode;
     private String salaryCurrency;
     private String salaryDuration;
-    private String salaryFrom;
-    private String salaryTo;
+    private Integer salaryFrom;
+    private Integer salaryTo;
 
     public String getCompanySize() {
         return companySize;
@@ -79,19 +79,19 @@ public class EssentialsDTO {
         this.salaryDuration = salaryDuration;
     }
 
-    public String getSalaryFrom() {
+    public Integer getSalaryFrom() {
         return salaryFrom;
     }
 
-    public void setSalaryFrom(String salaryFrom) {
+    public void setSalaryFrom(Integer salaryFrom) {
         this.salaryFrom = salaryFrom;
     }
 
-    public String getSalaryTo() {
+    public Integer getSalaryTo() {
         return salaryTo;
     }
 
-    public void setSalaryTo(String salaryTo) {
+    public void setSalaryTo(Integer salaryTo) {
         this.salaryTo = salaryTo;
     }
 }
