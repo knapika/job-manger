@@ -5,11 +5,10 @@ import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.example.javaserver.utils.Consts.STATUS_OK;
 
@@ -36,5 +35,11 @@ public class OfferLogic {
     public Integer saveOffer(Offer offer) {
         this.offerRepository.save(offer);
         return STATUS_OK;
+    }
+
+    public List<Offer> getAllOffers() {
+        List<Offer> offers = new LinkedList<>();
+        this.offerRepository.findAll().forEach(offers::add);
+        return offers;
     }
 }

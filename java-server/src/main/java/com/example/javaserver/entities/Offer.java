@@ -1,6 +1,7 @@
 package com.example.javaserver.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -35,7 +36,6 @@ public class Offer implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="companyID")
-    @JsonBackReference
     private Company companyID;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)

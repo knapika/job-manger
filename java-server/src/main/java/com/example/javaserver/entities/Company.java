@@ -1,11 +1,16 @@
 package com.example.javaserver.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name="Companies")
-public class Company {
+public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +35,7 @@ public class Company {
     private String locationCountry;
 
     @OneToMany()
+    @JsonIgnore
     private Set<Offer> offersID;
 
     public Integer getCompanyID() {

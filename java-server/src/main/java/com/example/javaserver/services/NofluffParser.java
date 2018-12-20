@@ -101,6 +101,10 @@ public class NofluffParser {
         System.out.println("Tworzenie");
         Offer offer = new Offer();
         offer.setPostingID(postingDTO.getId());
+        offer.setSalaryFrom(postingDTO.getEssentials().getSalaryFrom());
+        offer.setSalaryTo(postingDTO.getEssentials().getSalaryTo());
+        offer.setSalaryCurrency(postingDTO.getEssentials().getSalaryCurrency());
+        offer.setSalaryDuration(postingDTO.getEssentials().getSalaryDuration());
         offer.setMusts(new HashSet<>(postingDTO.getMusts()));
         offer.setNices(new HashSet<>(postingDTO.getNices()));
         offer.setLangs(new HashSet<>(postingDTO.getLangs()));
