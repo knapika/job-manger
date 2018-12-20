@@ -1,11 +1,15 @@
 package com.example.javaserver.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name="Skills")
-public class Skill {
+public class Skill implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,12 +23,15 @@ public class Skill {
     private String value;
 
     @ManyToMany(mappedBy = "musts")
+    @JsonIgnore
     Set<Offer> musts;
 
     @ManyToMany(mappedBy = "nices")
+    @JsonIgnore
     Set<Offer> nices;
 
     @ManyToMany(mappedBy = "nices")
+    @JsonIgnore
     Set<Offer> langs;
 
     public Skill() {

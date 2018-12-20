@@ -1,14 +1,17 @@
 package com.example.javaserver.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="Offers")
-public class Offer {
+public class Offer implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -18,8 +21,21 @@ public class Offer {
     @Column
     private String postingID;
 
+    @Column
+    private Integer salaryFrom;
+
+    @Column
+    private Integer salaryTo;
+
+    @Column
+    private String salaryCurrency;
+
+    @Column
+    private String salaryDuration;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="companyID")
+    @JsonBackReference
     private Company companyID;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -90,5 +106,37 @@ public class Offer {
 
     public void setCompanyID(Company companyID) {
         this.companyID = companyID;
+    }
+
+    public Integer getSalaryFrom() {
+        return salaryFrom;
+    }
+
+    public void setSalaryFrom(Integer salaryFrom) {
+        this.salaryFrom = salaryFrom;
+    }
+
+    public Integer getSalaryTo() {
+        return salaryTo;
+    }
+
+    public void setSalaryTo(Integer salaryTo) {
+        this.salaryTo = salaryTo;
+    }
+
+    public String getSalaryCurrency() {
+        return salaryCurrency;
+    }
+
+    public void setSalaryCurrency(String salaryCurrency) {
+        this.salaryCurrency = salaryCurrency;
+    }
+
+    public String getSalaryDuration() {
+        return salaryDuration;
+    }
+
+    public void setSalaryDuration(String salaryDuration) {
+        this.salaryDuration = salaryDuration;
     }
 }
