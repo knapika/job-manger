@@ -9,7 +9,6 @@ import { DataService } from './services/data-service.service';
 export class AppComponent {
   title = 'webclient';
 
-  constructor(private dataService: DataService) {
-    this.dataService.test().subscribe(response => console.log(response));
+  constructor() {
   }
 }
