@@ -16,6 +16,7 @@ public class HttpCustomClient {
     private final String USER_AGENT = "Mozilla/5.0";
 
     public String getPageContent(String url) throws IOException {
+        System.out.println("url: " + url);
         HttpGet request = new HttpGet(url);
         HttpClient client = HttpClientBuilder.create().build();
 

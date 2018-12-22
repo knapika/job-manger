@@ -34,7 +34,7 @@ public class Company implements Serializable {
     @Column
     private String locationCountry;
 
-    @OneToMany()
+    @OneToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Offer> offersID;
 

@@ -19,7 +19,7 @@ public class Skill implements Serializable {
     @Column
     private Integer rank;
 
-    @Column
+    @Column(columnDefinition="LONGTEXT")
     private String value;
 
     @ManyToMany(mappedBy = "musts")

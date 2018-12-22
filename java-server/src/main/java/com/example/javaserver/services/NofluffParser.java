@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.*;
@@ -42,28 +43,7 @@ public class NofluffParser {
         this.objectMapper = new ObjectMapper();
     }
 
-//    public List<PostingDTO> getJobsOffersIdByCriteria(String tech, String city, String position, String experience,
-//                                                  String salary) throws IOException {
-//        String completeUrl = nofluffApiUrl;
-//        String json = httpCustomClient.getPageContent(completeUrl);
-//
-//
-//        PostingsDTO postings = this.objectMapper.readValue(json, PostingsDTO.class);
-//        List<PostingDTO> postedOffers = postings.getPostings();
-//
-//        Optional<ParserUsed> parserUsed = this.parserRepository.findByParserName(NofluffParser.parserName);
-//        if(parserUsed.isPresent()) {
-//            postedOffers = postedOffers.parallelStream()
-//                    .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
-//                    .collect(Collectors.toList());
-//        }
-//
-//        postedOffers.parallelStream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
-//
-//        return postings.getPostings();
-//    }
-
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void saveOffers() throws IOException {
         String completeUrl = nofluffApiUrl;
         String json = httpCustomClient.getPageContent(completeUrl);
@@ -78,8 +58,7 @@ public class NofluffParser {
                     .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
                     .collect(Collectors.toList());
         }
-
-        postedOffers.parallelStream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
+        postedOffers.stream().forEach(offer -> this.saveOffer(offer.getId()));
     }
 
     private void saveOffer(String offerID) {
@@ -90,8 +69,11 @@ public class NofluffParser {
             PostingDTO postingDTO = this.objectMapper.readValue(json, PostingsDTO.class).getPosting();
             Offer offer = this.createOffer(postingDTO);
 
-            System.out.println(offer.getOfferID());
             this.offerLogic.saveOffer(offer);
+            offer.setCompanyID(this.companyLogic.addOfferToCompany(offer, postingDTO));
+            this.offerLogic.saveOffer(offer);
+            System.out.println("Stworzono");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,8 +97,6 @@ public class NofluffParser {
         offer.getNices().stream().forEach(nice -> nice.setNices(new HashSet<>(offers)));
         offer.getLangs().stream().forEach(lang -> lang.setLangs(new HashSet<>(offers)));
 
-        offer.setCompanyID(this.companyLogic.addOfferToCompany(offer, postingDTO));
-        System.out.println("Stworzono");
         return offer;
     }
 }

@@ -6,6 +6,7 @@ import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ public class CompanyLogic {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Transactional
     public Company addOfferToCompany(Offer offer, PostingDTO postingDTO) {
         Optional<Company> company = this.companyRepository.findByUrl(postingDTO.getCompany().getUrl());
         if (company.isPresent()) {
