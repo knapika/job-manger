@@ -34,6 +34,18 @@ public class Offer implements Serializable {
     @Column
     private String salaryDuration;
 
+    @Column
+    private String category;
+
+    @Column
+    private String title;
+
+    @Column
+    private String level;
+
+    @Column
+    private String technology;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="companyID")
     private Company companyID;
@@ -58,6 +70,14 @@ public class Offer implements Serializable {
 
 
     public Offer() {
+    }
+
+    public String getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(String technology) {
+        this.technology = technology;
     }
 
     public Integer getOfferID() {
@@ -138,5 +158,29 @@ public class Offer implements Serializable {
 
     public void setSalaryDuration(String salaryDuration) {
         this.salaryDuration = salaryDuration;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

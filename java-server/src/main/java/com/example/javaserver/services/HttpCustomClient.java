@@ -26,10 +26,8 @@ public class HttpCustomClient {
         request.setHeader("Accept-Language", "en-US,en;q=0.5");
 
         HttpResponse response = client.execute(request);
-
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
-
         StringBuffer result = new StringBuffer();
         String line = "";
         while ((line = rd.readLine()) != null) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PostingsDTO {
-    private List<PostingDTO> postings;
+    private List<BasicPostingDTO> postings;
     private PostingDTO posting;
 
     public PostingDTO getPosting() {
@@ -17,11 +17,11 @@ public class PostingsDTO {
         this.posting = posting;
     }
 
-    public List<PostingDTO> getPostings() {
+    public List<BasicPostingDTO> getPostings() {
         return postings;
     }
 
-    public void setPostings(List<PostingDTO> postings) {
+    public void setPostings(List<BasicPostingDTO> postings) {
         this.postings = postings;
     }
 }

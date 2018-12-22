@@ -1,10 +1,20 @@
 package com.example.javaserver.dtos;
 
+
 public class TitleDTO {
     private String category;
     private String level;
-    private String technology;
     private String title;
+    private String technology;
+
+
+    public String getTechnology() {
+        return technology;
+    }
+
+    public void setTechnology(String technology) {
+        this.technology = technology;
+    }
 
     public String getCategory() {
         return category;
@@ -20,14 +30,6 @@ public class TitleDTO {
 
     public void setLevel(String level) {
         this.level = level;
-    }
-
-    public String getTechnology() {
-        return technology;
-    }
-
-    public void setTechnology(String technology) {
-        this.technology = technology;
     }
 
     public String getTitle() {

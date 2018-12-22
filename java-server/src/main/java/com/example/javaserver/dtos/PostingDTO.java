@@ -2,6 +2,7 @@ package com.example.javaserver.dtos;
 
 import com.example.javaserver.entities.Skill;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,15 @@ public class PostingDTO {
     private List<Skill> nices;
     private List<Skill> langs;
     private EssentialsDTO essentials;
+    private TitleDTO title;
+
+    public TitleDTO getTitle() {
+        return title;
+    }
+
+    public void setTitle(TitleDTO title) {
+        this.title = title;
+    }
 
     public String getId() {
         return id;
