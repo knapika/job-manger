@@ -38,7 +38,7 @@ public class CompanyLogic {
             List<Offer> offerList = new LinkedList<>();
             offerList.add(offer);
             newCompany.setOffers(new HashSet<>(offerList));
-//            this.companyRepository.save(newCompany);
+            this.companyRepository.save(newCompany);
             return newCompany;
         }
     }

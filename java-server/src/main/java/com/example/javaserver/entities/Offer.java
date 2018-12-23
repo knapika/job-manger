@@ -53,11 +53,11 @@ public class Offer implements Serializable {
     @Column
     private String getEmploymentTypeDesc;
 
-    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL,
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY, optional = false)
     private Equipment equipment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="companyID")
     private Company company;
 

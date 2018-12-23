@@ -4,6 +4,7 @@ import com.example.javaserver.dtos.BasicPostingDTO;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.dtos.PostingsDTO;
 
+import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.ParserUsed;
 
@@ -47,7 +48,7 @@ public class NofluffParser {
         this.objectMapper = new ObjectMapper();
     }
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void saveOffers() throws IOException {
         String completeUrl = nofluffApiUrl;
         String json = httpCustomClient.getPageContent(completeUrl);
@@ -62,7 +63,7 @@ public class NofluffParser {
                     .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
                     .collect(Collectors.toList());
         }
-        postedOffers.stream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
+        postedOffers.parallelStream().forEach(offer -> this.saveOffer(offer.getId()));
     }
 
     private void saveOffer(String offerID) {
@@ -74,8 +75,8 @@ public class NofluffParser {
             Offer offer = this.createOffer(postingDTO);
 
             this.offerLogic.saveOffer(offer);
-            offer.setCompany(this.companyLogic.addOfferToCompany(offer, postingDTO));
-            this.offerLogic.saveOffer(offer);
+            Company company = this.companyLogic.addOfferToCompany(offer, postingDTO);
+            this.offerLogic.addCompany(offer.getOfferID(), company);
             this.equipmentLogic.addEquipment(postingDTO.getEquipment(), offer);
             System.out.println("Stworzono");
 

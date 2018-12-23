@@ -1,6 +1,7 @@
 package com.example.javaserver.services;
 
 import com.example.javaserver.dtos.PostingDTO;
+import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,23 @@ public class OfferLogic {
     public Integer saveOffer(Offer offer) {
         this.offerRepository.save(offer);
         return STATUS_OK;
+    }
+
+
+    public Offer getOfferById(Integer id) {
+        Optional<Offer> offer = this.offerRepository.findById(id);
+        if(offer.isPresent()) {
+            return offer.get();
+        }
+        return null;
+    }
+
+    public void addCompany(Integer id, Company company) {
+        Optional<Offer> offer = this.offerRepository.findById(id);
+        if(offer.isPresent()) {
+            offer.get().setCompany(company);
+            this.offerRepository.save(offer.get());
+        }
     }
 
     public List<Offer> getAllOffers() {
