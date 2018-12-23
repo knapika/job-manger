@@ -5,5 +5,7 @@ export interface Company {
     postalCode: string;
     locationStreet: string;
     locationCountry: string;
-    locationCity: string;    
+    locationCity: string;
+    companySize: string;
+        
 }

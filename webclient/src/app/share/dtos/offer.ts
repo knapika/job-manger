@@ -1,5 +1,6 @@
 import { Company } from "./company";
 import { Skill } from "./skill";
+import { Equipment } from "./equipment";
 
 export interface Offer {
     offerID: number;
@@ -13,6 +14,7 @@ export interface Offer {
     technology: string;
     title: string;
     level: string;
+    equipment: Equipment;
     isFavorite: boolean;
     isExpanded: boolean;
     musts: Skill[];

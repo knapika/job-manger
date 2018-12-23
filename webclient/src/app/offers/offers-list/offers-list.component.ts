@@ -16,6 +16,7 @@ export class OffersListComponent implements OnInit {
     this.dataService.getOffers().subscribe(report => {
       this.offers = report
       this.offers = this.offers.slice(0, 400);
+      console.log(this.offers);
     });
   }
 
