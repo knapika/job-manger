@@ -1,41 +1,66 @@
 <ul *ngIf="offers" id="offer-list">
-  <li *ngFor="let offer of offers" class="offer-container">
+  <li *ngFor="let offer of offers; let i = index" class="offer-container">
     <div class="row">
-      <div class="col category">
-        <h6>CATEGORY</h6>
-        {{offer.category}}
+      <div class="col-1 buttons">
+        <div class="row centered">
+          <span class="fa fa-star star" [ngClass]="{checked: offer.isFavorite}"></span>
+        </div>
+        <div class="row centered">
+          <button mat-stroked-button	color="accent" (click)="addOfferToFavs(offer)">{{getButtonLabel(offer.isFavorite)}}</button>
+        </div>
+        <div class="row centered">
+          <button mat-stroked-button	color="accent" (click)="expandRow(i)">More</button>
+        </div>
+
       </div>
-      <div class="col">
-        <h6>CITY</h6>
-        {{offer.city}}
-      </div>
-      <div class="col">
-          <h6>COMPANY</h6>
-        <div>{{offer.companyName}}</div>
-      </div>
-      <div class="col">
-        <h6>MUSTS</h6>
-        <ul>
-          <li *ngFor="let elem of getList(offer.musts)"><div>{{elem.value}}</div></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h6>NICES</h6>
-        <ul>
-            <li *ngFor="let elem of getList(offer.nices)"><div>{{elem.value}}</div></li>
-          </ul> 
-      </div>
-      <div class="col">
-        <h6>LANGS</h6>
-        <ul>
-            <li *ngFor="let elem of getList(offer.langs)"><div>{{elem.value}}</div></li>
-          </ul>
-      </div>
-      <div class="col">
-        <h6>SALARY</h6>
-        <div><span class="label">From: </span>{{offer.salaryFrom}} zl </div>
-        <div><span class="label">To: </span>{{offer.salaryTo}} zl </div>
+      <div class="col-11">
+        <div class="row">
+          <div class="col category">
+            <h6 class="header-label">CATEGORY</h6>
+            {{offer.category}}
+          </div>
+          <div class="col">
+            <h6 class="header-label">CITY</h6>
+            {{offer.company.locationCity}}
+          </div>
+          <div class="col">
+            <h6 class="header-label">COMPANY</h6>
+            <div>{{offer.company.name}}</div>
+          </div>
+          <div class="col">
+            <h6 class="header-label">MUSTS</h6>
+            <ul>
+              <li *ngFor="let elem of getList(offer.musts)">
+                <div>{{elem.value}}</div>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <h6 class="header-label">NICES</h6>
+            <ul>
+              <li *ngFor="let elem of getList(offer.nices)">
+                <div>{{elem.value}}</div>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <h6 class="header-label">LANGS</h6>
+            <ul>
+              <li *ngFor="let elem of getList(offer.langs)">
+                <div>{{elem.value}}</div>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <h6 class="header-label">SALARY</h6>
+            <div><span class="label">From: </span>{{offer.salaryFrom}} {{offer.salaryCurrency}} </div>
+            <div><span class="label">To: </span>{{offer.salaryTo}} {{offer.salaryCurrency}} </div>
+            <div><span class="label">Duration: </span>{{offer.salaryDuration}} </div>
+          </div>
+        </div>
       </div>
     </div>
+
+
   </li>
 </ul>

@@ -33,3 +33,27 @@ div {
     overflow: hidden;
     text-overflow: ellipsis; 
 }
+
+.header-label {
+    color: #9c9a9a;
+}
+
+.buttons {
+    text-align: center;
+}
+
+:host::ng-deep .mat-stroked-button {
+    line-height: 30px;
+    margin-top: 5px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.star {
+    margin-left: 50px;
+}
+
+.checked {
+    color: yellow;
+}
+
