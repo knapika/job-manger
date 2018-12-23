@@ -1,66 +1,112 @@
 <ul *ngIf="offers" id="offer-list">
-  <li *ngFor="let offer of offers; let i = index" class="offer-container">
-    <div class="row">
-      <div class="col-1 buttons">
-        <div class="row centered">
-          <span class="fa fa-star star" [ngClass]="{checked: offer.isFavorite}"></span>
+  <li *ngFor="let offer of offers; let i = index">
+    <div class="offer-container">
+      <div class="row" [style.height]="getRowHeight(offer.isExpanded)">
+        <div class="col-1 buttons">
+          <div class="row centered">
+            <span class="fa fa-star star" [ngClass]="{checked: offer.isFavorite}"></span>
+          </div>
+          <div class="row centered">
+            <button mat-stroked-button color="accent" (click)="addOfferToFavs(offer)">{{getFavsButtonLabel(offer.isFavorite)}}</button>
+          </div>
+          <div class="row centered">
+            <button mat-stroked-button color="accent" (click)="expandRow(offer)">{{getExpandButtonLabel(offer.isExpanded)}}</button>
+          </div>
         </div>
-        <div class="row centered">
-          <button mat-stroked-button	color="accent" (click)="addOfferToFavs(offer)">{{getButtonLabel(offer.isFavorite)}}</button>
+        <div class="col-11">
+          <div class="row">
+            <div class="col category">
+              <h6 class="header-label">CATEGORY</h6>
+              {{offer.category}}
+            </div>
+            <div class="col">
+              <h6 class="header-label">CITY</h6>
+              {{offer.company.locationCity}}
+            </div>
+            <div class="col">
+              <h6 class="header-label">COMPANY</h6>
+              <div>{{offer.company.name}}</div>
+            </div>
+            <div class="col">
+              <h6 class="header-label">MUSTS</h6>
+              <ul>
+                <li *ngFor="let elem of getList(offer.musts, offer.isExpanded)">
+                  <div class="short-desc">{{elem.value}}</div>
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <h6 class="header-label">NICES</h6>
+              <ul>
+                <li *ngFor="let elem of getList(offer.nices, offer.isExpanded)">
+                  <div class="short-desc">{{elem.value}}</div>
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <h6 class="header-label">LANGS</h6>
+              <ul>
+                <li *ngFor="let elem of getList(offer.langs, offer.isExpanded)">
+                  <div class="short-desc">{{elem.value}}</div>
+                </li>
+              </ul>
+            </div>
+            <div class="col">
+              <h6 class="header-label">SALARY</h6>
+              <div><span class="label">From: </span>{{offer.salaryFrom}} {{offer.salaryCurrency}} </div>
+              <div><span class="label">To: </span>{{offer.salaryTo}} {{offer.salaryCurrency}} </div>
+              <div><span class="label">Duration: </span>{{offer.salaryDuration}} </div>
+            </div>
+          </div>
         </div>
-        <div class="row centered">
-          <button mat-stroked-button	color="accent" (click)="expandRow(i)">More</button>
-        </div>
+      </div>
 
-      </div>
-      <div class="col-11">
-        <div class="row">
-          <div class="col category">
-            <h6 class="header-label">CATEGORY</h6>
-            {{offer.category}}
-          </div>
-          <div class="col">
-            <h6 class="header-label">CITY</h6>
-            {{offer.company.locationCity}}
-          </div>
-          <div class="col">
-            <h6 class="header-label">COMPANY</h6>
-            <div>{{offer.company.name}}</div>
-          </div>
-          <div class="col">
-            <h6 class="header-label">MUSTS</h6>
-            <ul>
-              <li *ngFor="let elem of getList(offer.musts)">
-                <div>{{elem.value}}</div>
-              </li>
-            </ul>
-          </div>
-          <div class="col">
-            <h6 class="header-label">NICES</h6>
-            <ul>
-              <li *ngFor="let elem of getList(offer.nices)">
-                <div>{{elem.value}}</div>
-              </li>
-            </ul>
-          </div>
-          <div class="col">
-            <h6 class="header-label">LANGS</h6>
-            <ul>
-              <li *ngFor="let elem of getList(offer.langs)">
-                <div>{{elem.value}}</div>
-              </li>
-            </ul>
-          </div>
-          <div class="col">
-            <h6 class="header-label">SALARY</h6>
-            <div><span class="label">From: </span>{{offer.salaryFrom}} {{offer.salaryCurrency}} </div>
-            <div><span class="label">To: </span>{{offer.salaryTo}} {{offer.salaryCurrency}} </div>
-            <div><span class="label">Duration: </span>{{offer.salaryDuration}} </div>
+      <div *ngIf="offer.isExpanded" class="row details">
+        <div class="col-1"></div>
+        <div class="col-11 details-row">
+          <div class="row">
+            <div class="col category">
+              <h6 class="header-label">Position Details</h6>
+              <div>
+                <div><span class="label">Title: </span><span>{{offer.title}}</span></div>
+                <div><span class="label">Technology: </span><span>{{offer.technology}}</span></div>
+                <div><span class="label">Level: </span><span>{{offer.level}}</span></div>
+              </div>
+
+            </div>
+            <div class="col">
+              <h6 class="header-label">Address</h6>
+              <div>
+                <div *ngIf="offer.company.locationCountry"><span class="label">Country: </span><span>{{offer.company.locationCountry}}</span></div>
+                <div *ngIf="offer.company.locationCity"><span class="label">City: </span><span>{{offer.company.locationCity}}</span></div>
+                <div *ngIf="offer.company.postalCode"><span class="label">Postal: </span><span>{{offer.company.postalCode}}</span></div>
+                <div *ngIf="offer.company.locationStreet"><span class="label">Street: </span><span>{{offer.company.locationStreet}}</span></div>
+              </div>
+            </div>
+            <div class="col">
+              <h6 class="header-label">Company Details</h6>
+              <div>
+                  <span class="label">Url: </span><a href="https://{{offer.company.url}}">{{offer.company.url}}</a>
+                  <div><span class="label">Size: </span><span>{{offer.company.size}}</span></div>
+                  <div><span class="label">Employment type:</span><span>{{offer.employmentType}}</span></div>
+                </div>
+            </div>
+            <div class="col">
+              
+            </div>
+            <div class="col">
+              
+            </div>
+            <div class="col">
+              
+            </div>
+            <div class="col">
+              
+            </div>
           </div>
         </div>
       </div>
+
     </div>
-
-
   </li>
 </ul>

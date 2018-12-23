@@ -11,9 +11,21 @@
     padding: 10px;
     box-shadow: 1px 3px #8d8a8a;
     border-radius: 25px;
-    height: 120px;
     margin-top: 20px;
   }
+
+.offer-container {
+    padding-left: 10px;
+}
+
+.basic-info {
+    height: 120px;
+}
+
+.details {
+    height: auto;
+    border-top: 1px solid #ac9d9d;
+}
 
 .category {
     text-align: center;
@@ -29,9 +41,9 @@ ul {
 }
 
 div {
-    white-space: nowrap; 
+    white-space: nowrap;
+    text-overflow: ellipsis;  
     overflow: hidden;
-    text-overflow: ellipsis; 
 }
 
 .header-label {
@@ -57,3 +69,6 @@ div {
     color: yellow;
 }
 
+.span {
+    overflow: hidden;
+}

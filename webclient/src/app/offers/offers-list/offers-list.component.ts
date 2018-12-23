@@ -15,20 +15,32 @@ export class OffersListComponent implements OnInit {
   ngOnInit() {
     this.dataService.getOffers().subscribe(report => {
       this.offers = report
-      console.log(this.offers)
+      this.offers = this.offers.slice(0, 400);
     });
   }
 
-  getList(list: any[]): any[] {
+  getList(list: any[], isExp: boolean): any[] {
+    if(isExp) {
+      return list;
+    }
     return list.slice(0, 3);
+    
   }
 
 
 
   // --------- template functions -------------
 
-  getButtonLabel(isFav: boolean): string {
+  getFavsButtonLabel(isFav: boolean): string {
     return isFav ? 'Del fav' : 'Add to favs';
+  }
+
+  getExpandButtonLabel(isExp: boolean): string {
+    return isExp ? 'Less' : 'More';
+  } 
+
+  getRowHeight(isExp: boolean): string {
+    return isExp ? 'auto' : '120px';
   }
 
   addOfferToFavs(offer: Offer): void {
@@ -37,13 +49,16 @@ export class OffersListComponent implements OnInit {
     } else {
       offer.isFavorite = true;
     }
-    
-    // akcja z serwerem
 
-   
+    // akcja z serwerem
+  
   }
 
-  expandRow(rowIndex: number): void {
-    console.log(rowIndex)
+  expandRow(offer: Offer): void {
+    if(offer.isExpanded) {
+      offer.isExpanded = false;
+    } else {
+      offer.isExpanded = true;
+    }
   }
 }

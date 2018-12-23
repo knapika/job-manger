@@ -14,6 +14,7 @@ export interface Offer {
     title: string;
     level: string;
     isFavorite: boolean;
+    isExpanded: boolean;
     musts: Skill[];
     nices: Skill[];
     langs: Skill[];
