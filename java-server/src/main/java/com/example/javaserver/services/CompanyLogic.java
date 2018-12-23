@@ -23,8 +23,8 @@ public class CompanyLogic {
     public Company addOfferToCompany(Offer offer, PostingDTO postingDTO) {
         Optional<Company> company = this.companyRepository.findByUrl(postingDTO.getCompany().getUrl());
         if (company.isPresent()) {
-            offer.setCompanyID(company.get());
-            company.get().getOffersID().add(offer);
+            offer.setCompany(company.get());
+            company.get().getOffers().add(offer);
             return company.get();
         } else {
             Company newCompany = new Company();
@@ -36,7 +36,7 @@ public class CompanyLogic {
             newCompany.setPostalCode(postingDTO.getEssentials().getPostalCode());
             List<Offer> offerList = new LinkedList<>();
             offerList.add(offer);
-            newCompany.setOffersID(new HashSet<>(offerList));
+            newCompany.setOffers(new HashSet<>(offerList));
 //            this.companyRepository.save(newCompany);
             return newCompany;
         }

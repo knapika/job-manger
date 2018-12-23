@@ -36,7 +36,7 @@ public class Company implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Offer> offersID;
+    private Set<Offer> offers;
 
     public Integer getCompanyID() {
         return companyID;
@@ -94,11 +94,11 @@ public class Company implements Serializable {
         this.locationCountry = locationCountry;
     }
 
-    public Set<Offer> getOffersID() {
-        return offersID;
+    public Set<Offer> getOffers() {
+        return offers;
     }
 
-    public void setOffersID(Set<Offer> offersID) {
-        this.offersID = offersID;
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 }

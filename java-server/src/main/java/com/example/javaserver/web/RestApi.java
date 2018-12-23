@@ -38,7 +38,7 @@ public class RestApi {
     @GetMapping(path="/offers")
     public @ResponseBody String getPostings() {
         List<Offer> offers = offerLogic.getAllOffers();
-        System.out.println(offers.get(0).getCompanyID().getName());
+//        System.out.println(offers.get(0).getCompanyID().getName());
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {

@@ -70,7 +70,7 @@ public class NofluffParser {
             Offer offer = this.createOffer(postingDTO);
 
             this.offerLogic.saveOffer(offer);
-            offer.setCompanyID(this.companyLogic.addOfferToCompany(offer, postingDTO));
+            offer.setCompany(this.companyLogic.addOfferToCompany(offer, postingDTO));
             this.offerLogic.saveOffer(offer);
             System.out.println("Stworzono");
 

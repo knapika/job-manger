@@ -48,7 +48,7 @@ public class Offer implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="companyID")
-    private Company companyID;
+    private Company company;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="musts",
@@ -120,12 +120,12 @@ public class Offer implements Serializable {
         this.langs = langs;
     }
 
-    public Company getCompanyID() {
-        return companyID;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyID(Company companyID) {
-        this.companyID = companyID;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Integer getSalaryFrom() {
