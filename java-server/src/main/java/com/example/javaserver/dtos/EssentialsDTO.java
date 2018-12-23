@@ -14,6 +14,16 @@ public class EssentialsDTO {
     private String salaryDuration;
     private Integer salaryFrom;
     private Integer salaryTo;
+    private String employmentTypeDesc;
+
+
+    public String getEmploymentTypeDesc() {
+        return employmentTypeDesc;
+    }
+
+    public void setEmploymentTypeDesc(String employmentTypeDesc) {
+        this.employmentTypeDesc = employmentTypeDesc;
+    }
 
     public String getCompanySize() {
         return companySize;

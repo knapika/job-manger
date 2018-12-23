@@ -1,5 +1,6 @@
 package com.example.javaserver.entities;
 
+import com.example.javaserver.dtos.EquipmentDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -46,6 +47,16 @@ public class Offer implements Serializable {
     @Column
     private String technology;
 
+    @Column
+    private String employmentType;
+
+    @Column
+    private String getEmploymentTypeDesc;
+
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Equipment equipment;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="companyID")
     private Company company;
@@ -70,6 +81,14 @@ public class Offer implements Serializable {
 
 
     public Offer() {
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
     }
 
     public String getTechnology() {
@@ -182,5 +201,21 @@ public class Offer implements Serializable {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getEmploymentType() {
+        return employmentType;
+    }
+
+    public void setEmploymentType(String employmentType) {
+        this.employmentType = employmentType;
+    }
+
+    public String getGetEmploymentTypeDesc() {
+        return getEmploymentTypeDesc;
+    }
+
+    public void setGetEmploymentTypeDesc(String getEmploymentTypeDesc) {
+        this.getEmploymentTypeDesc = getEmploymentTypeDesc;
     }
 }

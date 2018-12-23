@@ -34,6 +34,7 @@ public class CompanyLogic {
             newCompany.setLocationCountry(postingDTO.getEssentials().getLocationCountry().getName());
             newCompany.setLocationStreet(postingDTO.getEssentials().getLocationStreet());
             newCompany.setPostalCode(postingDTO.getEssentials().getPostalCode());
+            newCompany.setCompanySize(postingDTO.getEssentials().getCompanySize());
             List<Offer> offerList = new LinkedList<>();
             offerList.add(offer);
             newCompany.setOffers(new HashSet<>(offerList));

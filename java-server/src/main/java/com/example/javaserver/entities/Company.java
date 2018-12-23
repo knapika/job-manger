@@ -32,6 +32,9 @@ public class Company implements Serializable {
     private String locationCity;
 
     @Column
+    private String companySize;
+
+    @Column
     private String locationCountry;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -100,5 +103,13 @@ public class Company implements Serializable {
 
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
+    }
+
+    public String getCompanySize() {
+        return companySize;
+    }
+
+    public void setCompanySize(String companySize) {
+        this.companySize = companySize;
     }
 }

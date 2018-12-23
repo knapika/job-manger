@@ -19,6 +19,15 @@ public class PostingDTO {
     private List<Skill> langs;
     private EssentialsDTO essentials;
     private TitleDTO title;
+    private EquipmentDTO equipment;
+
+    public EquipmentDTO getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(EquipmentDTO equipment) {
+        this.equipment = equipment;
+    }
 
     public TitleDTO getTitle() {
         return title;

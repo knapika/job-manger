@@ -7,6 +7,7 @@ import com.example.javaserver.dtos.PostingsDTO;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.ParserUsed;
 
+import com.example.javaserver.repositories.EquipmentRepository;
 import com.example.javaserver.repositories.ParserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class NofluffParser {
 
     @Autowired
     private OfferLogic offerLogic;
+
+    @Autowired
+    private EquipmentLogic equipmentLogic;
 
 
     static final String parserName = "Nofluff";
@@ -58,7 +62,7 @@ public class NofluffParser {
                     .filter(offer -> offer.getPosted().after(parserUsed.get().getUsed()))
                     .collect(Collectors.toList());
         }
-        postedOffers.stream().forEach(offer -> this.saveOffer(offer.getId()));
+        postedOffers.stream().limit(1).forEach(offer -> this.saveOffer(offer.getId()));
     }
 
     private void saveOffer(String offerID) {
@@ -72,6 +76,7 @@ public class NofluffParser {
             this.offerLogic.saveOffer(offer);
             offer.setCompany(this.companyLogic.addOfferToCompany(offer, postingDTO));
             this.offerLogic.saveOffer(offer);
+            this.equipmentLogic.addEquipment(postingDTO.getEquipment(), offer);
             System.out.println("Stworzono");
 
         } catch (IOException e) {
@@ -101,6 +106,8 @@ public class NofluffParser {
         offer.setCategory(postingDTO.getCategory());
         offer.setLevel(postingDTO.getTitle().getLevel());
         offer.setTechnology(postingDTO.getTitle().getTechnology());
+        offer.setEmploymentType(postingDTO.getEssentials().getEmploymentType());
+        offer.setGetEmploymentTypeDesc(postingDTO.getEssentials().getEmploymentTypeDesc());
         return offer;
     }
 }
