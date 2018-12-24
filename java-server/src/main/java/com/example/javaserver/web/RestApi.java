@@ -1,6 +1,7 @@
 package com.example.javaserver.web;
 
 import com.example.javaserver.dtos.CategoryStats;
+import com.example.javaserver.dtos.LevelStats;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.dtos.TechnologyStats;
 import com.example.javaserver.entities.Offer;
@@ -72,6 +73,20 @@ public class RestApi {
     @GetMapping(path="/offers/technologies")
     public @ResponseBody String getTechnologies() {
         List<TechnologyStats> stats = this.offerLogic.getTechnologies();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(stats);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(path="/offers/levels")
+    public @ResponseBody String getLevels() {
+        List<LevelStats> stats = this.offerLogic.getLevels();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

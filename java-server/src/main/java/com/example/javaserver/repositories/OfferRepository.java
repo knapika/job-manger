@@ -23,7 +23,7 @@ public interface OfferRepository extends CrudRepository<Offer, Integer> {
            nativeQuery = true)
     List<Object[]> getTechnologyStats();
 
-//    @Query(value="SELECT o.level as level, COUNT(*) as count FROM offers as o WHERE o.level is not null GROUP BY o.level",
-//            nativeQuery = true)
-//    List<Object[]> getLevelStats();
+    @Query(value="SELECT o.level as level, COUNT(*) as count FROM offers as o WHERE o.level is not null AND LENGTH(o.level) > 0 GROUP BY o.level",
+            nativeQuery = true)
+    List<Object[]> getLevelStats();
 }

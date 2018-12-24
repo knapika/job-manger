@@ -1,6 +1,7 @@
 package com.example.javaserver.services;
 
 import com.example.javaserver.dtos.CategoryStats;
+import com.example.javaserver.dtos.LevelStats;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.dtos.TechnologyStats;
 import com.example.javaserver.entities.Company;
@@ -80,5 +81,14 @@ public class OfferLogic {
                 Long.parseLong(String.valueOf(pair[1])))));
 
         return technologyStats;
+    }
+
+    public List<LevelStats> getLevels() {
+        List<Object[]> stats = this.offerRepository.getLevelStats();
+        List<LevelStats> levelStats = new LinkedList<>();
+        stats.forEach(pair -> levelStats.add(new LevelStats(pair[0].toString(),
+                Long.parseLong(String.valueOf(pair[1])))));
+
+        return levelStats;
     }
 }
