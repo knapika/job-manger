@@ -1,5 +1,6 @@
 package com.example.javaserver.web;
 
+import com.example.javaserver.dtos.CategoryStats;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.User;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class RestApi {
@@ -23,6 +25,9 @@ public class RestApi {
 
     @Autowired
     private OfferLogic offerLogic;
+
+    public RestApi() {
+    }
 
     @GetMapping(path="/add")
     public @ResponseBody Integer addNewUser () {
@@ -43,6 +48,20 @@ public class RestApi {
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {
             return mapper.writeValueAsString(offers);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(path="/offers/categories")
+    public @ResponseBody String getCategories() {
+        List<CategoryStats> stats = this.offerLogic.getCategories();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(stats);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

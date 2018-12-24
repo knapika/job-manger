@@ -1,5 +1,6 @@
 package com.example.javaserver.services;
 
+import com.example.javaserver.dtos.CategoryStats;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 
 import static com.example.javaserver.utils.Consts.STATUS_OK;
@@ -59,5 +61,14 @@ public class OfferLogic {
         List<Offer> offers = new LinkedList<>();
         this.offerRepository.findAll().forEach(offers::add);
         return offers;
+    }
+
+    public  List<CategoryStats> getCategories() {
+        List<Object[]> stats = this.offerRepository.getCategoryStats();
+        List<CategoryStats> categoryStats = new LinkedList<>();
+        stats.forEach(pair -> categoryStats.add(new CategoryStats(pair[0].toString(),
+                Long.parseLong(String.valueOf(pair[1])))));
+
+        return categoryStats;
     }
 }
