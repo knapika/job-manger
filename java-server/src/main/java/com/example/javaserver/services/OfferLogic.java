@@ -2,6 +2,7 @@ package com.example.javaserver.services;
 
 import com.example.javaserver.dtos.CategoryStats;
 import com.example.javaserver.dtos.PostingDTO;
+import com.example.javaserver.dtos.TechnologyStats;
 import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.OfferRepository;
@@ -70,5 +71,14 @@ public class OfferLogic {
                 Long.parseLong(String.valueOf(pair[1])))));
 
         return categoryStats;
+    }
+
+    public List<TechnologyStats> getTechnologies() {
+        List<Object[]> stats = this.offerRepository.getTechnologyStats();
+        List<TechnologyStats> technologyStats = new LinkedList<>();
+        stats.forEach(pair -> technologyStats.add(new TechnologyStats(pair[0].toString(),
+                Long.parseLong(String.valueOf(pair[1])))));
+
+        return technologyStats;
     }
 }
