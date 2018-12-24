@@ -1,11 +1,9 @@
 package com.example.javaserver.web;
 
-import com.example.javaserver.dtos.CategoryStats;
-import com.example.javaserver.dtos.LevelStats;
-import com.example.javaserver.dtos.PostingDTO;
-import com.example.javaserver.dtos.TechnologyStats;
+import com.example.javaserver.dtos.*;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.entities.User;
+import com.example.javaserver.services.CompanyLogic;
 import com.example.javaserver.services.OfferLogic;
 import com.example.javaserver.services.UserLogic;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,6 +25,9 @@ public class RestApi {
 
     @Autowired
     private OfferLogic offerLogic;
+
+    @Autowired
+    private CompanyLogic companyLogic;
 
     public RestApi() {
     }
@@ -87,6 +88,20 @@ public class RestApi {
     @GetMapping(path="/offers/levels")
     public @ResponseBody String getLevels() {
         List<LevelStats> stats = this.offerLogic.getLevels();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(stats);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(path="/companies/cities")
+    public @ResponseBody String getCities() {
+        List<CityStats> stats = this.companyLogic.getCitiesStats();
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

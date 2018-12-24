@@ -1,5 +1,6 @@
 package com.example.javaserver.services;
 
+import com.example.javaserver.dtos.CityStats;
 import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
@@ -41,5 +42,15 @@ public class CompanyLogic {
             this.companyRepository.save(newCompany);
             return newCompany;
         }
+    }
+
+    public List<CityStats> getCitiesStats() {
+        List<Object[]> stats = this.companyRepository.getCitiesStats();
+        List<CityStats> cityStats = new LinkedList<>();
+
+        stats.forEach(pair -> cityStats.add(new CityStats(pair[0].toString(),
+                Long.parseLong(String.valueOf(pair[1])))));
+
+        return cityStats;
     }
 }
