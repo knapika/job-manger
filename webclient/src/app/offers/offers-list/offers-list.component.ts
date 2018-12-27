@@ -107,7 +107,7 @@ export class OffersListComponent implements OnInit, OnDestroy {
       this.isEqual(offer.company.locationCity, this.cityFilter) &&
       this.isEqual(offer.category, this.categoryFilter) &&
       this.isEqual(offer.level, this.levelFilter) &&
-      this.validateSalary(offer.salaryFrom, offer.salaryTo, this.salaryFilter));
+      this.validateSalary(offer.salaryFrom, offer.salaryTo, offer.salaryDuration, this.salaryFilter));
     console.log(this.filtered.length);
   }
 
@@ -139,16 +139,19 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
 
-  private validateSalary(offerFrom: number, offerTo: number, filterIndex: number): boolean {
-    if(!offerFrom || !offerTo) {
+  private validateSalary(offerFrom: number, offerTo: number, duration: string, filterIndex: number): boolean {
+    if(!offerFrom || !offerTo || !duration) {
       return false;
     }
 
+    const durationMultiplier = this.getDurationMultiplier(duration);
     const salaryRange: any = this.getSalaryRange(this.salaryThresholds[filterIndex]);
     const from = salaryRange.from;
     const to = salaryRange.to;
 
-    return from <= offerFrom && offerFrom <= to || from <= offerTo && offerTo <= to;
+    offerFrom *= durationMultiplier;
+    offerTo *= durationMultiplier;
+    return from <= offerFrom && offerFrom < to || from <= offerTo && offerTo < to;
   } 
 
   private getSalaryRange(thresholds: any): any {
@@ -166,6 +169,15 @@ export class OffersListComponent implements OnInit, OnDestroy {
     }
 
     return {from: from, to: to}; 
+  }
+
+  private getDurationMultiplier(duration: string): number {
+    switch(duration.toLowerCase()) {
+      case 'month': return 1;
+      case 'day': return 22;
+      case 'week': return 4;
+      default: return 1;
+    }
   }
 
   private isEqual(property: string, condition: string): boolean {
