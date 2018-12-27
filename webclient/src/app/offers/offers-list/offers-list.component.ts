@@ -23,6 +23,7 @@ export class OffersListComponent implements OnInit, OnDestroy {
 
   offers: Offer[];
   filtered: Offer[];
+  loading: boolean;
 
   techFilter: string;
   cityFilter: string;
@@ -35,7 +36,9 @@ export class OffersListComponent implements OnInit, OnDestroy {
   categories: Category[];
   levels: Level[];
   salaryThresholds: any[];
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {
+    this.loading = true;
+   }
 
   ngOnInit() {
     this.getTechnologies();
@@ -115,6 +118,7 @@ export class OffersListComponent implements OnInit, OnDestroy {
     this.dataService.getOffers().subscribe(report => {
       this.offers = report
       this.filtered = this.offers.slice(0, 400);
+      this.loading = false;
     });
   }
 

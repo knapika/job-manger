@@ -42,7 +42,7 @@
 
 
 
-<ul *ngIf="offers" id="offer-list">
+<ul *ngIf="filtered && filtered.length > 0; else offersLack" id="offer-list">
   <li *ngFor="let offer of filtered; let i = index">
     <div class="offer-container">
       <div class="row" [style.height]="getRowHeight(offer.isExpanded)">
@@ -152,3 +152,7 @@
     </div>
   </li>
 </ul>
+
+<ng-template #offersLack>
+  <div *ngIf="!loading" id="offers-lack">Sorry, there is no job offers for choosen filters</div>
+</ng-template>

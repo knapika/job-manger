@@ -84,3 +84,8 @@ div {
 .filter {
     margin-left: 30px;
 }
+
+#offers-lack {
+    color: red;
+    margin-left: 500px;
+}
