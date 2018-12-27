@@ -144,6 +144,10 @@ export class OffersListComponent implements OnInit, OnDestroy {
 
 
   private validateSalary(offerFrom: number, offerTo: number, duration: string, filterIndex: number): boolean {
+    if(!filterIndex) {
+      return true;
+    }
+    
     if(!offerFrom || !offerTo || !duration) {
       return false;
     }
