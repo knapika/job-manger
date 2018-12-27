@@ -22,6 +22,22 @@
       <mat-option *ngFor="let option of categories" [value]="option.category">{{option.category}}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-form-field class="filter">
+    <mat-label>Level</mat-label>
+    <mat-select [(value)]="levelFilter" (selectionChange)="filterOffers($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of levels" [value]="option.level">{{option.level}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter">
+    <mat-label>Salary</mat-label>
+    <mat-select [(value)]="salaryFilter" (selectionChange)="filterOffers($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of salaryThresholds" [value]="option.id">{{getSalaryLabel(option)}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 
