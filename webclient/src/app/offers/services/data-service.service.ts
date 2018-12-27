@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Offer } from 'src/app/share/dtos/offer';
 import { Technology } from 'src/app/share/dtos/technology';
 import { City } from 'src/app/share/dtos/city';
+import { Category } from 'src/app/share/dtos/category';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,10 @@ export class DataService {
   getCities(): Observable<City[]> {
     const url = DataService.baseUrl + '/companies/cities';
     return this.http.get<City[]>(url, {})
+  }
+
+  getCategories(): Observable<Category[]> {
+    const url = DataService.baseUrl + '/offers/categories';
+    return this.http.get<Category[]>(url, {});
   }
 }

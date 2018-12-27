@@ -3,6 +3,7 @@ import { DataService } from '../services/data-service.service';
 import { Offer } from 'src/app/share/dtos/offer';
 import { Technology } from 'src/app/share/dtos/technology';
 import { City } from 'src/app/share/dtos/city';
+import { Category } from 'src/app/share/dtos/category';
 
 const DEFAULT_FILTER = "None"
 @Component({
@@ -17,14 +18,18 @@ export class OffersListComponent implements OnInit, OnDestroy {
 
   techFilter: string;
   cityFilter: string;
+  categoryFilter: string;
+
 
   technologies: Technology[];
   cities: City[];
+  categories: Category[];
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.getTechnologies();
     this.getCities();
+    this.getCategories();
 
     this.getOffers();
 
@@ -74,7 +79,8 @@ export class OffersListComponent implements OnInit, OnDestroy {
 
   filterOffers(event): void {
     this.filtered = this.offers.filter(offer => this.checkStringProperty(offer.technology, this.techFilter) &&
-      this.checkStringProperty(offer.company.locationCity, this.cityFilter));
+      this.checkStringProperty(offer.company.locationCity, this.cityFilter) &&
+      this.checkStringProperty(offer.category, this.categoryFilter));
     console.log(this.filtered.length);
   }
 
@@ -91,6 +97,10 @@ export class OffersListComponent implements OnInit, OnDestroy {
 
   private getCities() {
     this.dataService.getCities().subscribe(resp => this.cities = resp);
+  }
+
+  private getCategories() {
+    this.dataService.getCategories().subscribe(resp => this.categories = resp);
   }
 
   private checkStringProperty(property: string, condition: string): boolean {

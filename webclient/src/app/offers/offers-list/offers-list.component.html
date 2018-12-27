@@ -7,13 +7,21 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field id="city-filter">
-      <mat-label>City</mat-label>
-      <mat-select [(value)]="cityFilter" (selectionChange)="filterOffers($event)">
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="filter">
+    <mat-label>City</mat-label>
+    <mat-select [(value)]="cityFilter" (selectionChange)="filterOffers($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter">
+    <mat-label>Category</mat-label>
+    <mat-select [(value)]="categoryFilter" (selectionChange)="filterOffers($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of categories" [value]="option.category">{{option.category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 
