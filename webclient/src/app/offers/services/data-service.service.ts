@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Offer } from 'src/app/share/dtos/offer';
 import { Technology } from 'src/app/share/dtos/technology';
+import { City } from 'src/app/share/dtos/city';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,10 @@ export class DataService {
   getTechnologies(): Observable<Technology[]> {
     const url = DataService.baseUrl + '/offers/technologies';
     return this.http.get<Technology[]>(url, {});
+  }
+
+  getCities(): Observable<City[]> {
+    const url = DataService.baseUrl + '/companies/cities';
+    return this.http.get<City[]>(url, {})
   }
 }
