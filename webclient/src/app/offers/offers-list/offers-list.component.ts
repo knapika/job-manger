@@ -1,23 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../services/data-service.service';
 import { Offer } from 'src/app/share/dtos/offer';
+import { Technology } from 'src/app/share/dtos/technology';
 
+const DEFAULT_FILTER = "None"
 @Component({
   selector: 'app-offers-list',
   templateUrl: './offers-list.component.html',
   styleUrls: ['./offers-list.component.css']
 })
-export class OffersListComponent implements OnInit {
+export class OffersListComponent implements OnInit, OnDestroy {
 
-  offers: any[];
+  offers: Offer[];
+  filtered: Offer[];
+
+  techFilter: string;
+
+
+  technologies: Technology[];
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.dataService.getTechnologies().subscribe(resp => {
+      this.technologies = resp;
+    });
+
     this.dataService.getOffers().subscribe(report => {
       this.offers = report
-      this.offers = this.offers.slice(0, 400);
-      console.log(this.offers);
+      this.filtered = this.offers.slice(0, 400);
     });
+  }
+  
+  ngOnDestroy() {
   }
 
   getList(list: any[], isExp: boolean): any[] {
@@ -31,7 +45,6 @@ export class OffersListComponent implements OnInit {
 
 
   // --------- template functions -------------
-
   getFavsButtonLabel(isFav: boolean): string {
     return isFav ? 'Del fav' : 'Add to favs';
   }
@@ -61,5 +74,26 @@ export class OffersListComponent implements OnInit {
     } else {
       offer.isExpanded = true;
     }
+  }  
+
+  filterOffers(event):void {
+    this.filtered = this.offers.filter(offer => this.checkStringProperty(offer.technology, this.techFilter));
+  }
+
+
+  private checkStringProperty(property: string, condition: string): boolean {
+    if(condition === DEFAULT_FILTER) {
+      return true;
+    }
+
+    if(!property) {
+      return false;
+    }
+
+    if(property.toLowerCase() === condition.toLowerCase()) {
+      return true;
+    }
+
+    return false;
   }
 }

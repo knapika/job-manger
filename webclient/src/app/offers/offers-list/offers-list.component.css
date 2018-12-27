@@ -72,3 +72,11 @@ div {
 .span {
     overflow: hidden;
 }
+
+.filters {
+    margin-top: 20px;
+}
+
+#tech-filter {
+    margin-left: 240px;
+}

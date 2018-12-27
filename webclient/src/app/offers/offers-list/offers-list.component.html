@@ -1,5 +1,17 @@
+<div class="row filters">
+  <mat-form-field id="tech-filter">
+    <mat-label>Technology</mat-label>
+    <mat-select [(value)]="techFilter" (selectionChange)="filterOffers($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of technologies" [value]="option.technology">{{option.technology}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+
+
 <ul *ngIf="offers" id="offer-list">
-  <li *ngFor="let offer of offers; let i = index">
+  <li *ngFor="let offer of filtered; let i = index">
     <div class="offer-container">
       <div class="row" [style.height]="getRowHeight(offer.isExpanded)">
         <div class="col-1 buttons">
