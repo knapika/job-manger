@@ -6,6 +6,7 @@ import { City } from 'src/app/share/dtos/city';
 import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
+import { TEST_USER } from 'src/app/share/utils/consts';
 
 const DEFAULT_FILTER = "None"
 const SALARY_OPTIONS = [
@@ -77,12 +78,13 @@ export class OffersListComponent implements OnInit, OnDestroy {
   addOfferToFavs(offer: Offer): void {
     if (offer.isFavorite) {
       offer.isFavorite = false;
+      this.dataService.deleteFavoriteOffer(TEST_USER.id, offer.offerID).subscribe(resp => 
+        this.dataService.getFavoriteOffers(TEST_USER.id).subscribe(resp => console.log(resp)));
     } else {
       offer.isFavorite = true;
-    }
-
-    // akcja z serwerem
-
+      this.dataService.addFavoriteOffer(offer.offerID).subscribe(resp => console.log(resp));
+    }  
+     
   }
 
   expandRow(offer: Offer): void {
@@ -111,7 +113,6 @@ export class OffersListComponent implements OnInit, OnDestroy {
       this.isEqual(offer.category, this.categoryFilter) &&
       this.isEqual(offer.level, this.levelFilter) &&
       this.validateSalary(offer.salaryFrom, offer.salaryTo, offer.salaryDuration, this.salaryFilter));
-    console.log(this.filtered.length);
   }
 
   private getOffers() {
