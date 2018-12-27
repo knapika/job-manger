@@ -8,6 +8,7 @@ import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
 import { TEST_USER } from 'src/app/share/utils/consts';
 import { FavoriteForm } from 'src/app/share/dtos/favorite-form';
+import { User } from 'src/app/share/dtos/user';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,9 +29,9 @@ export class DataService {
     return this.http.get<string>(url, {});
   }
 
-  getOffers(): Observable<Offer[]> {
+  getOffers(user: User): Observable<Offer[]> {
     const url = DataService.baseUrl + '/offers';
-    return this.http.get<Offer[]>(url, {});
+    return this.http.post<Offer[]>(url, user, {});
   }
 
   getTechnologies(): Observable<Technology[]> {

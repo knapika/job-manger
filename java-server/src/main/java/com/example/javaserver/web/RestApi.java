@@ -20,6 +20,7 @@ import java.util.Map;
 
 import static com.example.javaserver.utils.Consts.STATUS_OK;
 
+@CrossOrigin
 @Controller
 public class RestApi {
     @Autowired
@@ -45,10 +46,16 @@ public class RestApi {
         return userLogic.addUser(n);
     }
 
-    @GetMapping(path="/offers")
-    public @ResponseBody String getPostings() {
+    @RequestMapping(path="/offers")
+    public @ResponseBody String getOffers(@RequestBody User user) {
         List<Offer> offers = offerLogic.getAllOffers();
-//        System.out.println(offers.get(0).getCompanyID().getName());
+        List<Offer> favorites = offerLogic.getUserFavorites(user.getUserID());
+
+        favorites.parallelStream().forEach(fav -> {
+            int idx = offers.indexOf(fav);
+            offers.get(idx).setIsFavorite(true);
+        });
+        
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {
@@ -115,24 +122,21 @@ public class RestApi {
         return null;
     }
 
-    @CrossOrigin
     @RequestMapping(path="/favorite/add")
     public @ResponseBody String addFavoriteOffer(@RequestBody FavoriteFormDTO formDTO) throws JsonProcessingException {
         this.offerLogic.addFavoriteOffer(formDTO.getUserID(), formDTO.getOfferID());
         return new ObjectMapper().writeValueAsString(formDTO);
     }
 
-    @CrossOrigin
+
     @RequestMapping(path="/favorite/delete")
     public @ResponseBody String deleteFavoriteOffer(@RequestBody FavoriteFormDTO formDTO) throws JsonProcessingException {
         this.offerLogic.deleteFavoriteOffer(formDTO.getUserID(), formDTO.getOfferID());
         return new ObjectMapper().writeValueAsString(formDTO);
     }
 
-    @CrossOrigin
     @RequestMapping(path="/favorites")
     public @ResponseBody String getUserFavorites(@RequestBody FavoriteFormDTO formDTO) {
-        System.out.println(formDTO.getUserID());
         List<Offer> offers = this.offerLogic.getUserFavorites(formDTO.getUserID());
 
         ObjectMapper mapper = new ObjectMapper();

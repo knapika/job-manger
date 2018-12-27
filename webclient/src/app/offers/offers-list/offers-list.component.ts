@@ -7,6 +7,7 @@ import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { TEST_USER } from 'src/app/share/utils/consts';
+import { User } from 'src/app/share/dtos/user';
 
 const DEFAULT_FILTER = "None"
 const SALARY_OPTIONS = [
@@ -116,10 +117,11 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
   private getOffers() {
-    this.dataService.getOffers().subscribe(report => {
+    this.dataService.getOffers(new User(TEST_USER.id)).subscribe(report => {
       this.offers = report
       this.filtered = this.offers.slice(0, 400);
       this.loading = false;
+      console.log(report)
     });
   }
 

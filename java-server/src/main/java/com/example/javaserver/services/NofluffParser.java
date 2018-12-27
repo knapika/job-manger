@@ -108,7 +108,6 @@ public class NofluffParser {
         offer.setLevel(postingDTO.getTitle().getLevel());
         offer.setTechnology(postingDTO.getTitle().getTechnology());
         offer.setEmploymentType(postingDTO.getEssentials().getEmploymentType());
-        offer.setGetEmploymentTypeDesc(postingDTO.getEssentials().getEmploymentTypeDesc());
         return offer;
     }
 }

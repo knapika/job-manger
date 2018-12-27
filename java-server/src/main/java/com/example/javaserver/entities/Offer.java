@@ -50,8 +50,7 @@ public class Offer implements Serializable {
     @Column
     private String employmentType;
 
-    @Column
-    private String getEmploymentTypeDesc;
+    private boolean isFavorite;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY, optional = false)
@@ -211,11 +210,11 @@ public class Offer implements Serializable {
         this.employmentType = employmentType;
     }
 
-    public String getGetEmploymentTypeDesc() {
-        return getEmploymentTypeDesc;
+    public boolean getIsFavorite() {
+        return isFavorite;
     }
 
-    public void setGetEmploymentTypeDesc(String getEmploymentTypeDesc) {
-        this.getEmploymentTypeDesc = getEmploymentTypeDesc;
+    public void setIsFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
