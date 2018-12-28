@@ -1,2 +1,13 @@
-<p-chart type="line" [data]="data" width="400px" height="300px"></p-chart>
+<h2 class="header">The most popular technologies (%)</h2>
+<p-chart type="pie" [data]="allTechs" width="400px" height="300px"></p-chart>
 
+<h2 class="header" [style.margin-top.px]="40">Technologies grouped by cities</h2>
+<div class="row dropdowns-row">
+    <mat-form-field id="tech-filter">
+        <mat-label>Technology</mat-label>
+        <mat-select [(value)]="techFilter" (selectionChange)="filterCities($event)">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let option of technologies" [value]="option.technology">{{option.technology}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
