@@ -14,6 +14,8 @@ import { FavoritesListComponent } from './favorites/favorites-list/favorites-lis
 import { FavoritesModule } from './favorites/favorites.module';
 import { StatsViewComponent } from './stats/stats-view/stats-view.component';
 import { StatsModule } from './stats/stats.module';
+import {ChartModule} from 'primeng/chart';
+
 
 const appRoutes: Routes = [
   { path: 'offers', component: OffersListComponent },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
       appRoutes,
     ),
 
+    ChartModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
