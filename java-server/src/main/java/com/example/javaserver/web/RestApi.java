@@ -110,7 +110,7 @@ public class RestApi {
 
     @GetMapping(path="/companies/cities")
     public @ResponseBody String getCities() {
-        List<CityStats> stats = this.companyLogic.getCitiesStats();
+        List<CityStats> stats = this.companyLogic.getCitiesStats(null);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -149,4 +149,16 @@ public class RestApi {
         return null;
     }
 
+    @RequestMapping(path="/stats/offers/byCities")
+    public @ResponseBody String getOffersByCities(@RequestBody TechnologyStats tech) {
+        List<CityStats> stats = this.companyLogic.getCitiesStats(tech.getTechnology());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(stats);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

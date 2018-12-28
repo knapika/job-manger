@@ -4,6 +4,9 @@ public class CityStats {
     private String city;
     private Long count;
 
+    public CityStats() {
+    }
+
     public CityStats(String city, Long count) {
         this.city = city;
         this.count = count;

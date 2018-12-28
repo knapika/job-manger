@@ -5,6 +5,8 @@ import com.example.javaserver.dtos.PostingDTO;
 import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.CompanyRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +46,14 @@ public class CompanyLogic {
         }
     }
 
-    public List<CityStats> getCitiesStats() {
-        List<Object[]> stats = this.companyRepository.getCitiesStats();
+    public List<CityStats> getCitiesStats(String technology) {
+        List<Object[]> stats = new LinkedList<>();
+        if(technology == null) {
+            stats = this.companyRepository.getCitiesStats();
+        } else {
+            stats = this.companyRepository.getCitiesStatsByTechnologies(technology);
+        }
+
         List<CityStats> cityStats = new LinkedList<>();
 
         stats.forEach(pair -> cityStats.add(new CityStats(pair[0].toString(),

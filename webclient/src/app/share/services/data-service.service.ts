@@ -21,6 +21,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DataService {
+   
   private static readonly baseUrl = 'http://localhost:8080';
   constructor(private http: HttpClient) { }
 
@@ -67,5 +68,10 @@ export class DataService {
   deleteFavoriteOffer(userID: number, offerID: number): Observable<any> {
     const url = DataService.baseUrl + '/favorite/delete';
     return this.http.post<any>(url, new FavoriteForm(userID, offerID), httpOptions);
+  }
+
+  getOffersByCities(technology: string): Observable<City[]> {
+    const url = DataService.baseUrl + '/stats/offers/byCities';
+    return this.http.post<any>(url, {technology: technology}, httpOptions);
   }
 }

@@ -10,6 +10,7 @@ const COLORS = [
     "red",
     "grey",
     "blue",
+    "orange",
 ]
 
 @Component({
@@ -20,6 +21,7 @@ const COLORS = [
 export class StatsViewComponent implements OnInit {
 
     allTechs: any;
+    offersByCities: any;
 
     techFilter: string;
     technologies: Technology[]
@@ -29,14 +31,18 @@ export class StatsViewComponent implements OnInit {
 
     ngOnInit() {
         this.getTechnologies();
-        
+        this.getOffersByCity(null);
+    }
+
+    // template
+    filterCities(evt) {
+        this.getOffersByCity(this.techFilter);
     }
 
     private getTechnologies() {
         this.dataService.getTechnologies().subscribe(resp => {
             this.technologies = resp;
-            const sorted = resp.sort((a, b) => b.count - a.count);
-            const prepared = this.findTheMostPopular(sorted);
+            const prepared = this.findTheMostPopular(resp, 'technology');
             const total = prepared.map(tech => tech.count).reduce((a, b) => a + b, 0);
             this.allTechs = {
                 labels: prepared.map(tech => tech.technology),
@@ -50,11 +56,28 @@ export class StatsViewComponent implements OnInit {
         })
     }
 
-    private findTheMostPopular(sorted: Technology[]): Technology[] {
-        let prepared: Technology[] = new Array<Technology>();
-        prepared.push(...sorted.slice(0,7));
+    private getOffersByCity(technology: string): void {
+        this.dataService.getOffersByCities(technology).subscribe(resp => {
+            const prepared = this.findTheMostPopular(resp, 'city');
+            this.offersByCities = {
+                labels: prepared.map(tech => tech.city),
+                datasets: [
+                    {
+                        label: 'Technologies by cities',
+                        data: prepared.map(tech => tech.count),
+                        backgroundColor:  "#FF6384",
+                        
+                    }]
+            };
+        });
+    }
+
+    private findTheMostPopular(resp: any[], label: string): any[] {
+        const sorted = resp.sort((a, b) => b.count - a.count)
+        let prepared: any[] = new Array<any>();
+        prepared.push(...sorted.slice(0,8));
         
-        const other: Technology = {technology: 'Other', count: sorted.slice(7)
+        const other: any = {label: 'Other', count: sorted.slice(8)
             .map(tech=> tech.count).reduce((a, b) => a + b, 0)};
         prepared.push(other)
         

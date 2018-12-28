@@ -4,6 +4,9 @@ public class TechnologyStats {
     private String technology;
     private Long count;
 
+    public TechnologyStats() {
+    }
+
     public TechnologyStats(String technology, Long count) {
         this.technology = technology;
         this.count = count;
