@@ -55,7 +55,7 @@ public class RestApi {
             int idx = offers.indexOf(fav);
             offers.get(idx).setIsFavorite(true);
         });
-        
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {

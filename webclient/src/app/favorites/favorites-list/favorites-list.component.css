@@ -1,0 +1,87 @@
+#offer-list {
+    list-style-type: none;
+    margin-left: 220px;
+    padding: 0;
+    overflow: hidden;
+    width: 85%;
+}
+  
+ #offer-list > li {
+    border: 1px solid #3f51b5;
+    padding: 10px;
+    box-shadow: 1px 3px #8d8a8a;
+    border-radius: 25px;
+    margin-top: 20px;
+  }
+
+.offer-container {
+    padding-left: 10px;
+}
+
+.details {
+    height: auto;
+    border-top: 1px solid #ac9d9d;
+}
+
+.category {
+    text-align: center;
+}
+
+.label {
+    color: #888888;
+    width: 100px;
+}
+
+ul {
+    padding: 10px;
+}
+
+div {
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+    overflow: hidden;
+}
+
+.header-label {
+    color: #9c9a9a;
+}
+
+.buttons {
+    text-align: center;
+}
+
+:host::ng-deep .mat-stroked-button {
+    line-height: 30px;
+    margin-top: 5px;
+    width: 100px;
+    margin-left: 10px;
+}
+
+.star {
+    margin-left: 50px;
+}
+
+.checked {
+    color: yellow;
+}
+
+.span {
+    overflow: hidden;
+}
+
+.filters {
+    margin-top: 20px;
+}
+
+#tech-filter {
+    margin-left: 240px;
+}
+
+.filter {
+    margin-left: 30px;
+}
+
+#offers-lack {
+    color: red;
+    margin-left: 500px;
+}

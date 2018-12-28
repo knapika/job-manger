@@ -10,9 +10,12 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { OffersListComponent } from './offers/offers-list/offers-list.component';
 import { OffersModule } from './offers/offers.module';
+import { FavoritesListComponent } from './favorites/favorites-list/favorites-list.component';
+import { FavoritesModule } from './favorites/favorites.module';
 
 const appRoutes: Routes = [
   { path: 'offers', component: OffersListComponent },
+  { path: 'favorites', component: FavoritesListComponent },
 ];
 
 @NgModule({
@@ -23,6 +26,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     OffersModule,
+    FavoritesModule,
     RouterModule.forRoot(
       appRoutes,
     ),

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from '../services/data-service.service';
+import { DataService } from '../../share/services/data-service.service';
 import { Offer } from 'src/app/share/dtos/offer';
 import { Technology } from 'src/app/share/dtos/technology';
 import { City } from 'src/app/share/dtos/city';
 import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
-import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { TEST_USER } from 'src/app/share/utils/consts';
 import { User } from 'src/app/share/dtos/user';
 

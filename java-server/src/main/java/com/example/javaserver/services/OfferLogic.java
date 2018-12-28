@@ -109,6 +109,7 @@ public class OfferLogic {
         List<FavoriteOffer> favorites = this.favoriteOfferRepository.findByUserID(userID);
         List<Integer> offerIDs = favorites.stream().map(fav -> fav.getOfferID()).collect(Collectors.toList());
         List<Offer> offers = (List<Offer>) this.offerRepository.findAllById(offerIDs);
+        offers.parallelStream().forEach(offer -> offer.setIsFavorite(true));
         return offers;
     }
 
