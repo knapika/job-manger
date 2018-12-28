@@ -12,10 +12,13 @@ import { OffersListComponent } from './offers/offers-list/offers-list.component'
 import { OffersModule } from './offers/offers.module';
 import { FavoritesListComponent } from './favorites/favorites-list/favorites-list.component';
 import { FavoritesModule } from './favorites/favorites.module';
+import { StatsViewComponent } from './stats/stats-view/stats-view.component';
+import { StatsModule } from './stats/stats.module';
 
 const appRoutes: Routes = [
   { path: 'offers', component: OffersListComponent },
   { path: 'favorites', component: FavoritesListComponent },
+  { path: 'stats', component: StatsViewComponent },
 ];
 
 @NgModule({
@@ -27,6 +30,7 @@ const appRoutes: Routes = [
   imports: [
     OffersModule,
     FavoritesModule,
+    StatsModule,
     RouterModule.forRoot(
       appRoutes,
     ),
