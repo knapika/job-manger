@@ -2,6 +2,7 @@ package com.example.javaserver.services;
 
 import com.example.javaserver.dtos.CityStats;
 import com.example.javaserver.dtos.PostingDTO;
+import com.example.javaserver.dtos.TechnologyStats;
 import com.example.javaserver.entities.Company;
 import com.example.javaserver.entities.Offer;
 import com.example.javaserver.repositories.CompanyRepository;
@@ -60,5 +61,24 @@ public class CompanyLogic {
                 Long.parseLong(String.valueOf(pair[1])))));
 
         return cityStats;
+    }
+
+    public List<TechnologyStats> getTechnologiesStatsInCity(String city) {
+        List<Object[]> stats = this.companyRepository.getTechnologiesStatsByCity(city);
+        List<TechnologyStats> technologyStats = new LinkedList<>();
+
+        stats.forEach(pair -> technologyStats.add(new TechnologyStats(pair[0].toString(),
+                this.getValueFromString(pair[1].toString()))));
+
+        return technologyStats;
+    }
+
+    private Long getValueFromString(String val) {
+        int idx = val.indexOf(".");
+        if(idx == -1) {
+            return Long.parseLong(String.valueOf(val));
+        }
+
+        return Long.parseLong(String.valueOf(val.substring(0, idx)));
     }
 }

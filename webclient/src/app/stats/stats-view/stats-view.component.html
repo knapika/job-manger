@@ -12,3 +12,14 @@
     </mat-form-field>
 </div>
 <p-chart type="bar" [data]="offersByCities" width="700px" height="500px"></p-chart>
+
+<h2 class="header" [style.margin-top.px]="40">AVG salary by technology in selected city (PLN)</h2>
+<div class="row dropdowns-row">
+    <mat-form-field id="city-filter">
+        <mat-label>City</mat-label>
+        <mat-select [(value)]="cityFilter" (selectionChange)="filterTech($event)">
+            <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<p-chart type="bar" [data]="techsInCity" width="700px" height="500px"></p-chart>

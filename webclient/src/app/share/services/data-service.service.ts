@@ -74,4 +74,9 @@ export class DataService {
     const url = DataService.baseUrl + '/stats/offers/byCities';
     return this.http.post<any>(url, {technology: technology}, httpOptions);
   }
+
+  getTechnologiesByCities(city: string): Observable<Technology[]> {
+    const url = DataService.baseUrl + '/stats/technologies/byCities';
+    return this.http.post<any>(url, {city: city}, httpOptions);
+  }
 }

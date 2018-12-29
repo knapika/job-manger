@@ -161,4 +161,17 @@ public class RestApi {
         }
         return null;
     }
+
+    @RequestMapping(path="/stats/technologies/byCities")
+    public @ResponseBody String getTechnologiesByCities(@RequestBody CityStats city) {
+        List<TechnologyStats> stats = this.companyLogic.getTechnologiesStatsInCity(city.getCity());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(stats);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
