@@ -17,9 +17,26 @@ public interface CompanyRepository extends CrudRepository<Company, Integer> {
             nativeQuery = true)
     List<Object []> getCitiesStats();
 
-    @Query(value="Select c.location_city as city, COUNT(*) as count FROM companies as c JOIN (SELECT o.companyid, o.technology FROM offers as o WHERE o.technology = :technology) as of " +
-            "on c.companyid = of.companyid " +
-            "GROUP by c.location_city",
+    @Query(value="Select c.location_city as city, \n" +
+            "\tCOUNT(*) as count,\n" +
+            "\tAVG(\n" +
+            "        case of.salary_duration\n" +
+            "    \t\twhen 'MONTH' then of.salary\n" +
+            "        \twhen 'YEAR' then of.salary / 12\n" +
+            "        \twhen 'DAY' then of.salary * 21\n" +
+            "        end\n" +
+            "    ) as avg\n" +
+            "    FROM companies as c \n" +
+            "\t\tJOIN (SELECT o.companyid, o.technology, o.salary_duration,\n" +
+            "      \t\tcase o.salary_currency\n" +
+            "            \twhen 'PLN' then (o.salary_from + o.salary_to) / 2\n" +
+            "            \twhen 'GBP' then (o.salary_from + o.salary_to) / 2 * 4.77\n" +
+            "            \twhen 'EUR' then (o.salary_from + o.salary_to) / 2 * 4.29\n" +
+            "            \twhen 'USD' then (o.salary_from + o.salary_to) / 2 * 3.76\n" +
+            "      \t\tend as salary\n" +
+            "      \t\tFROM offers as o WHERE o.technology LIKE :technology AND o.salary_from is not null) as of\n" +
+            "on c.companyid = of.companyid\n" +
+            "Group by c.location_city",
            nativeQuery = true)
     List<Object[]> getCitiesStatsByTechnologies(@Param("technology") String technology);
 

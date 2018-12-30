@@ -23,6 +23,7 @@ export class StatsViewComponent implements OnInit {
 
     allTechs: any;
     offersByCities: any;
+    avgByCities: any;
     techsInCity: any;
 
     techFilter: string;
@@ -80,12 +81,24 @@ export class StatsViewComponent implements OnInit {
                 labels: prepared.map(tech => tech.city),
                 datasets: [
                     {
-                        label: 'Technologies by cities',
+                        label: 'Offers amount',
                         data: prepared.map(tech => tech.count),
                         backgroundColor: "#FF6384",
 
-                    }]
+                    }
+                ]
             };
+
+            this.avgByCities = {
+                labels: prepared.map(tech => tech.city),
+                datasets: [
+                    {
+                        label: 'AVG salary (PLN per MONTH)',
+                        data: prepared.map(tech => Math.round(tech.avg)),
+                        backgroundColor: "#FFCE56",
+                    }
+                ]
+            }
         });
     }
 

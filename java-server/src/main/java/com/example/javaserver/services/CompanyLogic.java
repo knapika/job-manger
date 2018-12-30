@@ -49,16 +49,16 @@ public class CompanyLogic {
 
     public List<CityStats> getCitiesStats(String technology) {
         List<Object[]> stats = new LinkedList<>();
+        List<CityStats> cityStats = new LinkedList<>();
         if(technology == null) {
-            stats = this.companyRepository.getCitiesStats();
-        } else {
-            stats = this.companyRepository.getCitiesStatsByTechnologies(technology);
+            technology = "%";
         }
 
-        List<CityStats> cityStats = new LinkedList<>();
+        stats = this.companyRepository.getCitiesStatsByTechnologies(technology);
 
         stats.forEach(pair -> cityStats.add(new CityStats(pair[0].toString(),
-                Long.parseLong(String.valueOf(pair[1])))));
+            Long.parseLong(String.valueOf(pair[1])),
+            Double.parseDouble(String.valueOf(pair[2])))));
 
         return cityStats;
     }

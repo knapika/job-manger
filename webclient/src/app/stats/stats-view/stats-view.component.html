@@ -11,7 +11,13 @@
         </mat-select>
     </mat-form-field>
 </div>
-<p-chart type="bar" [data]="offersByCities" width="700px" height="500px"></p-chart>
+<div class="row">
+    <p-chart type="bar" [data]="offersByCities" width="600px" height="450px"></p-chart>
+
+    <p-chart id="avgChart" type="bar" [data]="avgByCities" width="600px" height="450px"></p-chart>
+</div>
+
+
 
 <h2 class="header" [style.margin-top.px]="40">AVG salary by technology in selected city (PLN)</h2>
 <div class="row dropdowns-row">
