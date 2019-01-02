@@ -20,7 +20,7 @@ public class Company implements Serializable {
     @Column
     private String name;
 
-    @Column(unique = true)
+    @Column
     private String url;
 
     @Column
