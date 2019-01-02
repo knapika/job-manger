@@ -24,6 +24,7 @@
     <mat-form-field id="city-filter">
         <mat-label>City</mat-label>
         <mat-select [(value)]="cityFilter" (selectionChange)="filterTech($event)">
+            <mat-option>None</mat-option>
             <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
         </mat-select>
     </mat-form-field>

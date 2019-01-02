@@ -33,7 +33,7 @@ export class StatsViewComponent implements OnInit {
     cities: City[];
 
     constructor(private dataService: DataService) {
-        this.cityFilter = 'Warszawa';
+        // this.cityFilter = 'Warszawa';
     }
 
     ngOnInit() {

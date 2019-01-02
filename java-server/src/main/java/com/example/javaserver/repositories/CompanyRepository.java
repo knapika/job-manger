@@ -60,7 +60,7 @@ public interface CompanyRepository extends CrudRepository<Company, Integer> {
             "    end as salary,\n" +
             "    o.salary_duration  \n" +
             "FROM offers as o JOIN companies as c ON o.companyid = c.companyid\n" +
-            "WHERE c.location_city = :city AND O.salary_from is not null AND o.salary_to is not null AND o.technology IS NOT NULL\n" +
+            "WHERE c.location_city LIKE :city AND O.salary_from is not null AND o.salary_to is not null AND o.technology IS NOT NULL\n" +
             ") as after_curr\n" +
             "GROUP BY after_curr.technology",
             nativeQuery = true)
