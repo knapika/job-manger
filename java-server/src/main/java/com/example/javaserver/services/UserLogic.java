@@ -42,6 +42,7 @@ public class UserLogic {
 
             if (hashedPassword.equals(userDB.get().getPassword())) {
                 user.setPassword("");
+                user.setUserID(userDB.get().getUserID());
                 return user;
             }
         }
