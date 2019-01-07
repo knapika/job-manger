@@ -1,0 +1,36 @@
+<div class="content"></div>
+<div *ngIf="logged == false && registerView == false" class="content">
+  <h2 class="header">Login</h2>
+  <form class="input-form">
+    <mat-form-field class="input-field">
+      <input matInput placeholder="Login" name="login" [(ngModel)]="login" >
+    </mat-form-field>
+
+    <mat-form-field class="input-field">
+      <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="warn" (click)="loginUser()">Submit</button>
+    <button mat-button (click)="changeViewToRegisterForm()">Register</button>
+  </form>
+</div>
+
+<div *ngIf="logged == false && registerView == true" class="content">
+    <h2 class="header">Register</h2>
+    <form class="input-form">
+      <mat-form-field class="input-field">
+        <input matInput placeholder="Login" name="register-login" [(ngModel)]="registerLogin" >
+      </mat-form-field>
+  
+      <mat-form-field class="input-field">
+        <input matInput type="password" placeholder="Password" name="register-password" [(ngModel)]="registerPassword">
+      </mat-form-field>
+
+      <mat-form-field class="input-field">
+          <input matInput type="password" placeholder="Repeat password" name="register-repeat" [(ngModel)]="registerRepeat">
+        </mat-form-field>
+  
+      <button mat-raised-button color="warn" (click)="registerUser()">Submit</button>
+      <button mat-button (click)="changeViewToLoginForm()">Login</button>
+    </form>
+  </div>

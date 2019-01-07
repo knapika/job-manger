@@ -79,4 +79,14 @@ export class DataService {
     const url = DataService.baseUrl + '/stats/technologies/byCities';
     return this.http.post<any>(url, {city: city}, httpOptions);
   }
+
+  loginUser(login: string, password: string): Observable<any> {
+    const url = DataService.baseUrl + '/login';
+    return this.http.post<any>(url, {login: login, password: password}, httpOptions);
+  }
+
+  registerUser(login: string, password: string): Observable<any> {
+    const url = DataService.baseUrl + '/register';
+    return this.http.post<any>(url, {login: login, password: password}, httpOptions);
+  }
 }

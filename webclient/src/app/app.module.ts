@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule,
+MatInputModule } from '@angular/material';
 import { OffersListComponent } from './offers/offers-list/offers-list.component';
 import { OffersModule } from './offers/offers.module';
 import { FavoritesListComponent } from './favorites/favorites-list/favorites-list.component';
@@ -15,19 +16,20 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { StatsViewComponent } from './stats/stats-view/stats-view.component';
 import { StatsModule } from './stats/stats.module';
 import {ChartModule} from 'primeng/chart';
+import { LoginComponent } from './login/login.component';
 
 
 const appRoutes: Routes = [
   { path: 'offers', component: OffersListComponent },
   { path: 'favorites', component: FavoritesListComponent },
   { path: 'stats', component: StatsViewComponent },
+  { path: '', component: LoginComponent},
 ];
 
 @NgModule({
-  
   declarations: [
     AppComponent,
-    
+    LoginComponent,
   ],
   imports: [
     OffersModule,
@@ -48,7 +50,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

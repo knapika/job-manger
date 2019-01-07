@@ -8,4 +8,6 @@ public final class Consts {
     public static final Integer ERROR_LOGIN_EXISTS = 101;
     public static final Integer ERROR_EMAIL_EXISTS = 102;
 
+    public static final Integer ERROR_VIA_LOGIN = 103;
+
 }
