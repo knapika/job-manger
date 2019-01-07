@@ -1,12 +1,12 @@
 .header {
-    margin-left: 220px;
+    margin-left: 20px;
     color: grey;
 }
 
 :host::ng-deep .chartjs-render-monitor {
-    margin-left: 220px;
+    margin-left: 20px;
 }
 
 .dropdowns-row {
-    margin-left: 220px;
+    margin-left: 20px;
 }
