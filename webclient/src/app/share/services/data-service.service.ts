@@ -6,7 +6,6 @@ import { Technology } from 'src/app/share/dtos/technology';
 import { City } from 'src/app/share/dtos/city';
 import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
-import { TEST_USER } from 'src/app/share/utils/consts';
 import { FavoriteForm } from 'src/app/share/dtos/favorite-form';
 import { User } from 'src/app/share/dtos/user';
 import { Report } from '../dtos/report';
@@ -56,9 +55,9 @@ export class DataService {
     return this.http.get<Level[]>(url, {});
   }
 
-  addFavoriteOffer(offerID: number): Observable<any> {
+  addFavoriteOffer(userID: number, offerID: number): Observable<any> {
     const url = DataService.baseUrl + '/favorite/add';
-    return this.http.post<any>(url, new FavoriteForm(TEST_USER.id, offerID), httpOptions);
+    return this.http.post<any>(url, new FavoriteForm(userID, offerID), httpOptions);
   }
 
   getFavoriteOffers(userID: number): Observable<Offer[]> {

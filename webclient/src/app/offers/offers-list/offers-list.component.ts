@@ -5,7 +5,6 @@ import { Technology } from 'src/app/share/dtos/technology';
 import { City } from 'src/app/share/dtos/city';
 import { Category } from 'src/app/share/dtos/category';
 import { Level } from 'src/app/share/dtos/level';
-import { TEST_USER } from 'src/app/share/utils/consts';
 import { User } from 'src/app/share/dtos/user';
 
 const DEFAULT_FILTER = "None"
@@ -76,13 +75,14 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
   addOfferToFavs(offer: Offer): void {
+    const userID = window.localStorage.getItem('userID');
     if (offer.isFavorite) {
       offer.isFavorite = false;
-      this.dataService.deleteFavoriteOffer(TEST_USER.id, offer.offerID).subscribe(resp => 
-        this.dataService.getFavoriteOffers(TEST_USER.id).subscribe(resp => console.log(resp)));
+      this.dataService.deleteFavoriteOffer(+userID, offer.offerID).subscribe(resp => 
+        this.dataService.getFavoriteOffers(+userID).subscribe(resp => console.log(resp)));
     } else {
       offer.isFavorite = true;
-      this.dataService.addFavoriteOffer(offer.offerID).subscribe(resp => console.log(resp));
+      this.dataService.addFavoriteOffer(+userID, offer.offerID).subscribe(resp => console.log(resp));
     }  
      
   }
@@ -116,11 +116,11 @@ export class OffersListComponent implements OnInit, OnDestroy {
   }
 
   private getOffers() {
-    this.dataService.getOffers(new User(TEST_USER.id)).subscribe(report => {
+    const userID = window.localStorage.getItem('userID');
+    this.dataService.getOffers(new User(+userID)).subscribe(report => {
       this.offers = report
       this.filtered = this.offers.slice(0, 400);
       this.loading = false;
-      console.log(report)
     });
   }
 

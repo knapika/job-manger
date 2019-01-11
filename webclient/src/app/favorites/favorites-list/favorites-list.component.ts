@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Offer } from 'src/app/share/dtos/offer';
 import { DataService } from 'src/app/share/services/data-service.service';
-import { TEST_USER } from 'src/app/share/utils/consts';
 
 @Component({
   selector: 'app-favorites-list',
@@ -17,7 +16,8 @@ export class FavoritesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataService.getFavoriteOffers(TEST_USER.id).subscribe(resp => {
+    const userID = window.localStorage.getItem('userID');
+    this.dataService.getFavoriteOffers(+userID).subscribe(resp => {
       this.favs = resp
       this.loading = false;
     });
@@ -28,10 +28,11 @@ export class FavoritesListComponent implements OnInit {
   }
 
   addOfferToFavs(offer: Offer): void {
+    const userID = window.localStorage.getItem('userID');
     if (offer.isFavorite) {
       offer.isFavorite = false;
-      this.dataService.deleteFavoriteOffer(TEST_USER.id, offer.offerID).subscribe(delResp => 
-        this.dataService.getFavoriteOffers(TEST_USER.id).subscribe(resp => this.favs = resp));
+      this.dataService.deleteFavoriteOffer(+userID, offer.offerID).subscribe(delResp => 
+        this.dataService.getFavoriteOffers(+userID).subscribe(resp => this.favs = resp));
     }
   }
 }
