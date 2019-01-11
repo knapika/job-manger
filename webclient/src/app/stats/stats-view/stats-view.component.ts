@@ -60,7 +60,7 @@ export class StatsViewComponent implements OnInit {
     private getTechnologies() {
         this.dataService.getTechnologies().subscribe(resp => {
             this.technologies = resp;
-            const prepared = this.findTheMostPopular(resp, 'technology');
+            const prepared = this.findTheMostPopular(resp, true);
             const total = prepared.map(tech => tech.count).reduce((a, b) => a + b, 0);
             this.allTechs = {
                 labels: prepared.map(tech => tech.technology),
@@ -76,9 +76,9 @@ export class StatsViewComponent implements OnInit {
 
     private getOffersByCity(technology: string): void {
         this.dataService.getOffersByCities(technology).subscribe(resp => {
-            const prepared = this.findTheMostPopular(resp, 'city');
+            const prepared = this.findTheMostPopular(resp, false);
             this.offersByCities = {
-                labels: prepared.map(tech => tech.city),
+                labels: prepared.map(tech => this.validateLabel(tech.city)),
                 datasets: [
                     {
                         label: 'Offers amount',
@@ -88,9 +88,8 @@ export class StatsViewComponent implements OnInit {
                     }
                 ]
             };
-
             this.avgByCities = {
-                labels: prepared.map(tech => tech.city),
+                labels: prepared.map(tech => this.validateLabel(tech.city)),
                 datasets: [
                     {
                         label: 'AVG salary (PLN per MONTH)',
@@ -116,17 +115,26 @@ export class StatsViewComponent implements OnInit {
         });
     }
 
-    private findTheMostPopular(resp: any[], label: string): any[] {
+    private findTheMostPopular(resp: any[], others: boolean): any[] {
         const sorted = resp.sort((a, b) => b.count - a.count)
         let prepared: any[] = new Array<any>();
-        prepared.push(...sorted.slice(0, 8));
+        prepared.push(...sorted.slice(0, 7));
 
-        const other: any = {
-            label: 'Other', count: sorted.slice(8)
-                .map(tech => tech.count).reduce((a, b) => a + b, 0)
-        };
-        prepared.push(other)
-
+        if (others) {
+            const other: any = {
+                technology: 'Other', count: sorted.slice(7)
+                    .map(tech => tech.count).reduce((a, b) => a + b, 0)
+            };
+            prepared.push(other)
+        }
+        
         return prepared;
+    }
+
+    private validateLabel(label: string): string {
+        if (label.length > 15) {
+            return label.slice(0, 12) + '...';
+        }
+        return label;
     }
 }
