@@ -85,12 +85,20 @@ public class CompanyLogic {
     }
 
     private String translateCity(String city) {
-        if (city.toLowerCase().equals("warsaw")) {
+        if (city.toLowerCase().equals("warsaw") || city.toLowerCase().equals("warszaw")) {
             return "Warszawa";
         }
 
         if (city.toLowerCase().equals("cracow")) {
             return "Kraków";
+        }
+
+        if (city.toLowerCase().equals("wroclaw")) {
+            return "Wrocław";
+        }
+
+        if (city.toLowerCase().equals("lodz")) {
+            return "Łódź";
         }
 
         if (city.toLowerCase().contains("remote") || city.toLowerCase().contains("zdalnie") ||
