@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.javaserver.utils.Consts.ERROR_VIA_LOGIN;
+import static com.example.javaserver.utils.Consts.ERROR_BAD_CRED;
 import static com.example.javaserver.utils.Consts.STATUS_OK;
 
 @CrossOrigin
@@ -181,11 +181,11 @@ public class RestApi {
     @RequestMapping(path="/register")
     public @ResponseBody String registerUser(@RequestBody User user) {
         user.setRegistrationDate(new Date());
-        Integer status = this.userLogic.addUser(user);
+        ReportDTO report = this.userLogic.addUser(user);
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {
-            return mapper.writeValueAsString(status);
+            return mapper.writeValueAsString(report);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -195,14 +195,16 @@ public class RestApi {
     @RequestMapping(path="/login")
     public @ResponseBody String loginUser(@RequestBody User user) throws JsonProcessingException {
         User loginResult = this.userLogic.login(user);
+        ReportDTO<User> report = new ReportDTO<User>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         if (loginResult != null) {
-            return mapper.writeValueAsString(loginResult);
+            report.setData(loginResult);
+            report.setStatus(STATUS_OK);
         } else {
-            return ERROR_VIA_LOGIN.toString();
+            report.setStatus(ERROR_BAD_CRED);
         }
+        return mapper.writeValueAsString(report);
     }
-
 }

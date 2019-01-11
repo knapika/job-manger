@@ -1,5 +1,6 @@
 package com.example.javaserver.services;
 
+import com.example.javaserver.dtos.ReportDTO;
 import com.example.javaserver.entities.User;
 import com.example.javaserver.repositories.UserRepository;
 import com.google.common.hash.Hashing;
@@ -21,7 +22,7 @@ public class UserLogic {
     private UserRepository userRepository;
 
 
-    public Integer addUser(User userToAdd) {
+    public ReportDTO<User> addUser(User userToAdd) {
         Integer status = this.validateUserToAdd(userToAdd);
         if(status == STATUS_OK) {
             String hashedPass = Hashing.sha256()
@@ -29,8 +30,10 @@ public class UserLogic {
                     .toString();
             userToAdd.setPassword(hashedPass);
             userRepository.save(userToAdd);
+            userToAdd.setUserID(userRepository.findByLogin(userToAdd.getLogin()).get().getUserID());
         }
-        return status;
+        userToAdd.setPassword("");
+        return new ReportDTO<>(userToAdd, status);
     }
 
     public User login(User user) {

@@ -17,19 +17,27 @@ import { StatsViewComponent } from './stats/stats-view/stats-view.component';
 import { StatsModule } from './stats/stats.module';
 import {ChartModule} from 'primeng/chart';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './share/auth/auth.guard';
+import { RegisterComponent } from './register/register.component';
 
 
 const appRoutes: Routes = [
-  { path: 'offers', component: OffersListComponent },
-  { path: 'favorites', component: FavoritesListComponent },
-  { path: 'stats', component: StatsViewComponent },
-  { path: '', component: LoginComponent},
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
+  { path: 'offers', component: OffersListComponent, canActivate: [AuthGuard]},
+  { path: 'favorites', component: FavoritesListComponent, canActivate: [AuthGuard]},
+  { path: 'stats', component: StatsViewComponent, canActivate: [AuthGuard]},
+  { path: '**', component: HomeComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    HomeComponent,
+    RegisterComponent,
   ],
   imports: [
     OffersModule,

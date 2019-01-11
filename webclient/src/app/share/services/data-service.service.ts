@@ -9,6 +9,7 @@ import { Level } from 'src/app/share/dtos/level';
 import { TEST_USER } from 'src/app/share/utils/consts';
 import { FavoriteForm } from 'src/app/share/dtos/favorite-form';
 import { User } from 'src/app/share/dtos/user';
+import { Report } from '../dtos/report';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -80,12 +81,12 @@ export class DataService {
     return this.http.post<any>(url, {city: city}, httpOptions);
   }
 
-  loginUser(login: string, password: string): Observable<any> {
+  loginUser(login: string, password: string): Observable<Report> {
     const url = DataService.baseUrl + '/login';
     return this.http.post<any>(url, {login: login, password: password}, httpOptions);
   }
 
-  registerUser(login: string, password: string): Observable<any> {
+  registerUser(login: string, password: string): Observable<Report> {
     const url = DataService.baseUrl + '/register';
     return this.http.post<any>(url, {login: login, password: password}, httpOptions);
   }

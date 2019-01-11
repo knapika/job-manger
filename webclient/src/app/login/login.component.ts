@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../share/services/data-service.service';
+import { STATUS_OK } from '../share/utils/consts';
+import { AuthService } from '../share/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,38 +14,29 @@ export class LoginComponent implements OnInit {
   login: string = '';
   password: string = '';
 
-  registerLogin: string = '';
-  registerPassword: string = '';
-  registerRepeat: string = '';
-
-  logged: boolean = false;
-  registerView = false;
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private router: Router, private dataService: DataService,
+    private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   loginUser() {
     this.dataService.loginUser(this.login, this.password).subscribe(resp => {
-      console.log(resp);
+      if (resp.status === STATUS_OK) {
+        localStorage.setItem('userID', resp.data.userID.toString());
+        const url = this.authService.getUrl();
+        if (url) {
+          this.router.navigate([url]);
+        } else {
+          this.router.navigate(['']);
+        }
+      } else {
+        alert("You have entered a bad login or password");
+      }     
     })
   }
 
-  registerUser() {
-    if (this.registerPassword === this.registerRepeat) {
-      this.dataService.registerUser(this.registerLogin, this.registerPassword).subscribe(resp => {
-        console.log(resp);
-      })
-    }  
-  }
-
   changeViewToRegisterForm() {
-    this.logged = false;
-    this.registerView = true;
-  }
-
-  changeViewToLoginForm() {
-    this.logged = false;
-    this.registerView = false;
+    this.router.navigate(['/register']);
   }
 }
